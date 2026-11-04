@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2105625 Casework II — Reactor OTS TE5 brief</title>
+
+<!-- Fonts: Montserrat (Latin) + Prompt (Thai) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+<!-- Chart.js — uncomment ONLY if the deck uses charts
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+-->
+
+<!-- Live poll: MQTT over WebSocket (public broker, no server of our own) -->
+<script defer src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
+<script>if(/[?&]poll=/.test(location.search))document.documentElement.classList.add('voter-mode');</script>
+<!-- QR generator (qrcode-generator 1.4.4, MIT) inlined so the deck stays a single offline-capable file -->
+<script>var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1})},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' sr'+'c="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(){var t=n("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});</script>
+
+<style>
+:root{
+  --navy:#1F497D; --blue:#4F81BD; --red:#C00000; --green:#1A8038; --orange:#D97706;
+  --ink:#1F2937; --muted:#6B7280; --line:#E5E7EB; --card:#F7F9FC; --bg:#FFFFFF;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%; background:#ECEFF3; overflow:hidden;
+  font-family:'Montserrat','Prompt',system-ui,sans-serif; color:var(--ink)}
+
+/* ---------- Stage: fixed 1280x720, scaled to fit ---------- */
+#stage{width:1280px; height:720px; position:absolute; top:50%; left:50%;
+  transform-origin:center; background:var(--bg); box-shadow:0 10px 40px rgba(31,73,125,.18); overflow:hidden}
+
+/* ---------- Slides ---------- */
+.slide{position:absolute; inset:0; display:none; flex-direction:column;
+  padding:56px 72px 64px; background:var(--bg); overflow:hidden}
+.slide svg{max-width:100%; max-height:440px}
+.slide.active{display:flex}
+.s-head{margin-bottom:28px}
+.kicker{font-size:15px; font-weight:600; letter-spacing:.14em; color:var(--muted); text-transform:uppercase; margin-bottom:8px}
+.s-head h2{font-size:36px; font-weight:700; color:var(--navy); line-height:1.2}
+.s-foot{position:absolute; left:72px; right:72px; bottom:26px; display:flex; justify-content:space-between; gap:20px;
+  font-size:15px; font-weight:500; color:var(--muted)}
+.grow{flex:1; display:flex; flex-direction:column; justify-content:center; min-height:0}
+.s-foot .s-sec{color:var(--blue)}
+
+/* Title slide */
+.title-slide{justify-content:center; align-items:flex-start; border-top:6px solid var(--navy)}
+.title-slide .pill{display:inline-block; font-size:15px; font-weight:600; letter-spacing:.12em;
+  color:var(--navy); border:1.5px solid var(--navy); border-radius:999px; padding:6px 18px; margin-bottom:34px}
+.title-slide .lecno{font-size:22px; font-weight:600; color:var(--blue); margin-bottom:10px}
+.title-slide h1{font-size:60px; font-weight:800; color:var(--navy); line-height:1.12; margin-bottom:30px; max-width:1000px}
+.title-slide .rule{width:88px; height:4px; background:var(--blue); margin-bottom:30px}
+.title-slide .who{font-size:17px; color:var(--muted); line-height:1.7}
+.title-slide .who b{color:var(--ink); font-weight:600}
+
+/* Section divider */
+.section-slide{justify-content:center; background:var(--bg)}
+.section-slide .big{position:absolute; top:26px; right:56px; font-size:150px; font-weight:800;
+  color:var(--navy); opacity:.08; line-height:1}
+.section-slide .lbl{font-size:19px; font-weight:700; letter-spacing:.14em; color:var(--blue);
+  text-transform:uppercase; margin-bottom:18px}
+.section-slide .q{font-size:44px; font-weight:700; color:var(--red); line-height:1.25; max-width:980px}
+
+/* Agenda / chapter hub */
+.agenda{display:flex; flex-direction:column; gap:18px; max-width:1020px}
+a.agenda-item{display:flex; align-items:center; gap:26px; text-decoration:none; color:inherit;
+  background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 28px}
+a.agenda-item:hover{border-color:var(--navy); box-shadow:0 4px 14px rgba(31,73,125,.12)}
+.agenda-item .no{flex:0 0 70px; font-size:26px; font-weight:800; color:var(--navy)}
+.agenda-item .qq{font-size:22px; font-weight:500; line-height:1.4}
+.agenda-item .go{margin-left:auto; color:var(--blue); font-size:26px}
+
+/* Cards */
+.cards{display:grid; gap:24px; grid-auto-columns:1fr; grid-auto-flow:column}
+.cards.wrap{grid-auto-flow:row; grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px 26px}
+.card h3{font-size:22px; font-weight:600; color:var(--navy); margin-bottom:10px}
+.card p{font-size:20px; line-height:1.5}
+.card .ic{width:34px; height:34px; margin-bottom:14px}
+.card-red{border-top:4px solid var(--red)} .card-green{border-top:4px solid var(--green)}
+.card-blue{border-top:4px solid var(--blue)} .card-orange{border-top:4px solid var(--orange)}
+
+/* Equations */
+.eq-box{background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:30px 36px; text-align:center; font-size:30px; margin:8px 0}
+.eq-note{font-size:18px; margin-top:14px; text-align:center}
+.eq-note.green{color:var(--green)} .eq-note.orange{color:var(--orange)} .eq-note.red{color:var(--red)}
+.eq-step{display:flex; align-items:center; gap:34px; padding:14px 6px; border-bottom:1px solid var(--line); font-size:23px}
+.eq-step:last-child{border-bottom:none}
+.eq-step .why{font-size:18px; color:var(--muted); flex:1; text-align:right}
+
+/* Comparison table */
+table.compare{width:100%; border-collapse:collapse; font-size:21px}
+.compare th{background:var(--card); color:var(--navy); font-weight:700; padding:14px 18px;
+  border:1px solid var(--line); text-align:center}
+.compare td{padding:16px 18px; border:1px solid var(--line); text-align:center}
+.compare td:first-child{font-weight:600; text-align:left}
+
+/* Callouts */
+.callout{border-left:5px solid var(--navy); background:var(--card); border-radius:0 12px 12px 0;
+  padding:16px 22px; font-size:21px; margin:14px 0}
+.callout.q{border-color:var(--red)} .callout.note{border-color:var(--green)} .callout.aside{border-color:var(--orange)}
+
+/* Layout helpers */
+.two-col{display:grid; grid-template-columns:11fr 9fr; gap:44px; align-items:center; flex:1}
+.stack>*+*{margin-top:20px}
+ul.clean{list-style:none} ul.clean li{font-size:22px; line-height:1.5; padding-left:30px; position:relative; margin-bottom:14px}
+ul.clean li::before{content:''; position:absolute; left:0; top:.55em; width:10px; height:10px; border-radius:3px; background:var(--blue)}
+ul.clean.sm li{font-size:18px; line-height:1.45; margin-bottom:10px; padding-left:24px}
+ul.clean.sm li::before{width:8px; height:8px; top:.5em}
+.small{font-size:15px} .muted{color:var(--muted)}
+
+/* Simulation */
+.sim{display:grid; grid-template-columns:2fr 3fr; grid-template-rows:minmax(0,1fr); gap:40px; align-items:center; flex:1; min-height:0}
+.sim-controls .sl{margin-bottom:26px}
+.sim-controls label{display:flex; justify-content:space-between; font-size:20px; font-weight:500; margin-bottom:8px}
+.val{font-weight:700; color:var(--navy); font-variant-numeric:tabular-nums}
+input[type=range]{width:100%; accent-color:var(--navy); height:34px; cursor:pointer}
+.sim-controls{align-self:center; min-width:0}
+.sim-out{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:24px; text-align:center;
+  display:flex; flex-direction:column; justify-content:center; align-self:stretch; min-height:0; overflow:hidden}
+.sim-out svg{max-height:100%; min-height:0}
+.bignum{font-size:52px; font-weight:800; color:var(--navy); font-variant-numeric:tabular-nums}
+.chart-box{position:relative; flex:1 1 auto; min-height:180px; max-height:430px; min-width:0}
+.chart-box>canvas{position:absolute; inset:0; width:100% !important; height:100% !important}
+
+/* Reveal */
+.reveal-btn{font:inherit; font-size:19px; font-weight:600; color:var(--navy); background:var(--bg);
+  border:2px solid var(--navy); border-radius:10px; padding:10px 26px; cursor:pointer}
+.reveal-btn:hover{background:var(--navy); color:#fff}
+.reveal-body{display:none; margin-top:18px}
+.reveal.open .reveal-body{display:block} .reveal.open .reveal-btn{display:none}
+
+/* Quiz */
+.quiz-q{max-width:1000px}
+.q-text{font-size:24px; font-weight:600; margin-bottom:22px; line-height:1.45}
+.q-opt{display:block; width:100%; text-align:left; font:inherit; font-size:21px; padding:14px 22px;
+  margin-bottom:12px; background:var(--card); border:1.5px solid var(--line); border-radius:12px; cursor:pointer}
+.q-opt:hover{border-color:var(--navy)}
+.q-opt.right{border-color:var(--green); background:#EDF7F0; color:var(--green); font-weight:600}
+.q-opt.wrong{border-color:var(--red); background:#FBEDED; color:var(--red)}
+.q-opt:disabled{cursor:default}
+.q-explain{display:none; border-left:5px solid var(--blue); background:var(--card);
+  padding:16px 22px; border-radius:0 12px 12px 0; font-size:19px; line-height:1.5; margin-top:14px}
+.q-explain.show{display:block}
+.quiz-score{font-size:21px; font-weight:700; color:var(--navy)}
+.quiz-total{font-size:30px; font-weight:800; color:var(--navy)}
+.quiz-breakdown{display:flex; flex-direction:column; gap:6px; margin:14px 0; max-width:560px}
+.qb-row{display:flex; justify-content:space-between; font-size:20px; border-bottom:1px solid var(--line); padding:7px 2px}
+/* Attempt history (one row per round) + reset control */
+.quiz-attempts{display:flex; flex-direction:column; gap:4px; margin:10px 0; max-width:640px}
+.qa-row{display:grid; grid-template-columns:1fr auto auto; gap:22px; align-items:baseline;
+  font-size:19px; padding:6px 2px; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
+.qa-row .qa-time{color:var(--muted); font-size:17px; min-width:104px; text-align:right}
+.qa-row.qa-now{color:var(--blue); font-weight:600}
+.qa-row.qa-best .qa-pts{color:var(--green); font-weight:700}
+.qa-note{font-size:16px; color:var(--muted); padding-top:4px}
+.quiz-reset{font:inherit; font-size:18px; font-weight:600; color:var(--navy); background:var(--bg);
+  border:2px solid var(--navy); border-radius:10px; padding:9px 24px; cursor:pointer}
+.quiz-reset:hover{background:var(--navy); color:#fff}
+
+/* Takeaways */
+.tk{display:flex; gap:22px; align-items:flex-start; margin-bottom:24px}
+.tk .n{flex:0 0 40px; height:40px; border-radius:50%; background:var(--navy); color:#fff;
+  font-weight:700; font-size:19px; display:flex; align-items:center; justify-content:center}
+.tk p{font-size:23px; line-height:1.45; padding-top:5px}
+
+/* HUD (not scaled) */
+#hud{position:fixed; right:18px; bottom:14px; display:flex; gap:8px; z-index:50}
+#hud button{width:42px; height:42px; border-radius:10px; border:1px solid var(--line); background:#fff;
+  font-size:18px; color:var(--navy); cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.08)}
+#hud button:hover{background:var(--card)}
+#progress{position:fixed; left:0; bottom:0; height:4px; background:var(--blue); width:0; z-index:60; transition:width .2s}
+#toc{position:fixed; inset:0; background:rgba(15,25,40,.55); display:none; z-index:100; align-items:center; justify-content:center}
+#toc.open{display:flex}
+#toc .panel{background:#fff; border-radius:16px; padding:34px 40px; max-height:80vh; overflow:auto; min-width:420px}
+#toc h3{color:var(--navy); font-size:20px; margin-bottom:18px; letter-spacing:.08em}
+#toc a{display:block; padding:9px 6px; font-size:16.5px; color:var(--ink); text-decoration:none; border-radius:8px}
+#toc a:hover{background:var(--card)} #toc a.cur{color:var(--navy); font-weight:700}
+#toc .sec{margin-top:10px; font-weight:700; color:var(--blue); font-size:14px; letter-spacing:.1em; text-transform:uppercase}
+
+.katex{font-size:1.06em}
+svg text{font-family:'Montserrat','Prompt',sans-serif}
+
+/* ================= Live poll: countdown dial, result bars, join slide, phone voter ================= */
+/* Countdown dial sits INSIDE .s-head so it can never overlap the content zone */
+.s-head.with-timer{display:flex; align-items:flex-end; justify-content:space-between; gap:26px}
+.s-head.with-timer .sh-txt{min-width:0}
+.qtimer{display:flex; align-items:center; gap:11px; flex:0 0 auto; padding-bottom:2px}
+.qt-dial{position:relative; width:74px; height:74px; flex:0 0 74px}
+.qt-dial svg{width:74px; height:74px; transform:rotate(-90deg)}
+.qt-dial circle{fill:none; stroke-width:7}
+.qt-dial .tk{stroke:var(--line)}
+.qt-dial .tp{stroke:var(--blue); stroke-linecap:round; transition:stroke-dashoffset .2s linear, stroke .3s}
+.qt-num{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-size:23px; font-weight:800; color:var(--navy); font-variant-numeric:tabular-nums}
+.qtimer.warn .tp{stroke:var(--orange)} .qtimer.warn .qt-num{color:var(--orange)}
+.qtimer.crit .tp{stroke:var(--red)} .qtimer.crit .qt-num{color:var(--red)}
+.qt-ctl{display:flex; flex-direction:column; gap:6px}
+.qt-sel{display:flex; gap:5px}
+.qt-sel button{font:inherit; font-size:13px; font-weight:700; padding:3px 11px; border-radius:999px;
+  border:1.5px solid var(--line); background:var(--bg); color:var(--muted); cursor:pointer}
+.qt-sel button.on{border-color:var(--navy); color:var(--navy); background:#EDF3FA}
+.qt-start{font:inherit; font-size:14px; font-weight:700; padding:6px 15px; border-radius:9px;
+  border:2px solid var(--navy); background:var(--navy); color:#fff; cursor:pointer; white-space:nowrap}
+.qt-start.run{background:var(--bg); color:var(--red); border-color:var(--red)}
+.qt-live{font-size:12.5px; font-weight:600; color:var(--muted); text-align:center; line-height:1.25; min-width:64px}
+.qt-live b{display:block; font-size:22px; color:var(--navy); font-variant-numeric:tabular-nums}
+.netdot{display:inline-block; width:8px; height:8px; border-radius:50%; background:#CBD5E1;
+  margin-right:5px; vertical-align:middle}
+.netdot.on{background:var(--green)} .netdot.connecting{background:var(--orange)}
+.netdot.fail,.netdot.lost,.netdot.nolib{background:var(--red)}
+
+/* Poll result slide */
+.poll-qtext{font-size:19.5px; font-weight:600; line-height:1.32; margin-bottom:15px;
+  max-height:2.7em; overflow:hidden}
+.poll-bars{display:flex; flex-direction:column; gap:12px}
+.pbar{display:grid; grid-template-columns:1fr 116px; gap:7px 16px; align-items:end; cursor:pointer}
+.pb-text{font-size:17.5px; line-height:1.28; max-height:2.6em; overflow:hidden}
+.pb-key{display:inline-block; width:24px; height:24px; line-height:23px; text-align:center; border-radius:7px;
+  background:var(--card); border:1px solid var(--line); font-size:13.5px; font-weight:800;
+  color:var(--navy); margin-right:9px; vertical-align:1px}
+.pb-num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+.pb-num b{font-size:23px; font-weight:800; color:var(--navy)}
+.pb-num span{font-size:15px; color:var(--muted); margin-left:7px}
+.pb-track{grid-column:1 / -1; height:15px; border-radius:999px; background:var(--card);
+  border:1px solid var(--line); overflow:hidden}
+.pb-fill{height:100%; width:0; border-radius:999px; background:var(--blue);
+  transition:width .95s cubic-bezier(.22,.9,.3,1), background .3s}
+.pbar.lead .pb-fill{background:var(--navy)}
+.revealed .pbar .pb-fill{background:#CBD5E1}
+.revealed .pbar.ok .pb-fill{background:var(--green)}
+.revealed .pbar.ok .pb-num b{color:var(--green)}
+.revealed .pbar.ok .pb-key{border-color:var(--green); color:var(--green); background:#EDF7F0}
+.poll-tools{display:flex; gap:9px; align-items:center; margin-top:15px; flex-wrap:wrap}
+.ptool{font:inherit; font-size:14px; font-weight:600; color:var(--navy); background:var(--bg);
+  border:1.5px solid var(--navy); border-radius:9px; padding:5px 13px; cursor:pointer}
+.ptool:hover{background:var(--navy); color:#fff}
+.poll-hint{font-size:14px; color:var(--muted); margin-left:auto; text-align:right; line-height:1.35}
+.poll-n{font-size:19px; font-weight:600; color:var(--blue); margin-left:14px; white-space:nowrap}
+.poll-exp{display:none; border-left:5px solid var(--green); background:var(--card); padding:10px 18px;
+  border-radius:0 12px 12px 0; font-size:16px; line-height:1.4; margin-top:11px; max-height:4.3em; overflow:hidden}
+.poll-exp.show{display:block}
+
+/* Join slide */
+.joingrid{display:grid; grid-template-columns:290px 1fr; gap:46px; align-items:center; flex:1; min-height:0}
+.qrbox{background:var(--bg); border:1.5px solid var(--line); border-radius:16px; padding:12px; text-align:center}
+.qrbox svg{width:236px; height:236px; display:block; margin:0 auto}
+.qrurl{font-size:12px; color:var(--muted); margin-top:7px; word-break:break-all; line-height:1.3}
+.roomchip{display:inline-block; font-size:16px; font-weight:600; letter-spacing:.14em; color:var(--navy);
+  border:2px solid var(--navy); border-radius:13px; padding:7px 20px; margin-bottom:14px}
+.roomchip b{font-size:31px; font-weight:800; letter-spacing:.18em; vertical-align:-3px; margin-left:10px}
+
+/* Phone voter page */
+#voter{display:none}
+html.voter-mode, html.voter-mode body{height:auto; overflow:auto; background:#EEF2F7}
+html.voter-mode #stage, html.voter-mode #hud, html.voter-mode #progress, html.voter-mode #toc{display:none !important}
+html.voter-mode #voter{display:block; max-width:620px; margin:0 auto; padding:18px 16px 44px}
+.v-head{display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:16px}
+.v-room{font-size:15px; font-weight:600; letter-spacing:.1em; color:var(--navy)}
+.v-room b{font-size:24px; font-weight:800; letter-spacing:.16em; margin-left:8px}
+.v-stat{font-size:13.5px; font-weight:600; color:var(--muted)}
+.v-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px 18px;
+  box-shadow:0 6px 18px rgba(31,73,125,.07)}
+.v-lbl{font-size:12.5px; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:9px}
+.v-q{font-size:19px; font-weight:600; line-height:1.4; margin-bottom:18px}
+.v-opt{display:flex; align-items:flex-start; gap:12px; width:100%; text-align:left; font:inherit;
+  font-size:17px; line-height:1.36; padding:14px 15px; margin-bottom:11px; background:var(--card);
+  border:1.5px solid var(--line); border-radius:14px; cursor:pointer; color:var(--ink)}
+.v-opt .k{flex:0 0 26px; height:26px; line-height:25px; text-align:center; border-radius:8px;
+  background:#fff; border:1px solid var(--line); font-size:14px; font-weight:800; color:var(--navy)}
+.v-opt.mine{border-color:var(--navy); background:#EDF3FA; font-weight:600}
+.v-opt.mine .k{background:var(--navy); color:#fff; border-color:var(--navy)}
+.v-opt:disabled{opacity:.62; cursor:default}
+.v-note{font-size:15px; color:var(--muted); line-height:1.5; margin-top:12px}
+.v-wait{text-align:center; padding:44px 10px; color:var(--muted); font-size:17px; line-height:1.6}
+.v-wait .big{font-size:44px; margin-bottom:12px}
+.v-foot{text-align:center; font-size:12.5px; color:var(--muted); margin-top:22px; line-height:1.5}
+.v-ok{margin-top:14px; padding:12px 15px; border-radius:12px; background:#EDF7F0;
+  color:var(--green); font-size:15.5px; font-weight:600; text-align:center}
+
+/* Difficulty tag on a quiz slide heading */
+.dtag{display:inline-block; font-size:14px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  padding:3px 11px; border-radius:999px; margin-left:14px; vertical-align:6px;
+  background:var(--card); border:1px solid var(--line); color:var(--muted)}
+.dtag.medium{border-color:var(--orange); color:var(--orange); background:#FEF6E7}
+.dtag.hard{border-color:var(--red); color:var(--red); background:#FBEDED}
+
+/* Print: one slide per landscape page */
+@media print{
+  html,body{overflow:visible; background:#fff}
+  #stage{position:static; transform:none !important; width:1280px; height:auto; box-shadow:none}
+  .slide{display:flex !important; position:relative; width:1280px; height:720px; page-break-after:always; border-bottom:1px solid var(--line)}
+  #hud,#progress,#toc{display:none !important}
+}
+/* ---- Casework brief additions ---- */
+a{color:var(--blue)}
+.chipno{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.flow{display:flex;align-items:stretch}
+.fstep{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}
+.fstep h3{font-size:22px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.fstep p{font-size:19px;line-height:1.35}
+.fstep.fred{border-color:var(--red);background:#FBEDED;color:var(--red);font-weight:700}
+.fstep.fgreen{border-color:var(--green);background:#EDF7F0;color:var(--green)}
+.farrow{flex:0 0 28px;display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:26px}
+.card p.qq{color:var(--red);font-weight:600;font-size:21px;line-height:1.4}
+.card p.sm{font-size:18px;margin-top:10px;line-height:1.45}
+.hot{cursor:pointer}
+.hot:hover{opacity:.78}
+.hot.sel{filter:drop-shadow(0 0 5px rgba(192,0,0,.85))}
+.stepbtn{display:block;width:100%;text-align:left;font:inherit;font-size:21px;font-weight:600;padding:13px 20px;margin-bottom:11px;background:var(--card);border:1.5px solid var(--line);border-radius:12px;cursor:pointer;color:var(--ink)}
+.stepbtn:hover{border-color:var(--navy)}
+.stepbtn.on{border-color:var(--navy);background:#EDF3FA;color:var(--navy)}
+table.sdn td.cell{cursor:pointer;font-weight:800;font-size:24px;user-select:none;width:74px}
+table.sdn td.S{background:#EDF7F0;color:var(--green)} table.sdn td.D{background:#FBEDED;color:var(--red)} table.sdn td.N{background:#F1F5F9;color:var(--muted)}
+table.sdn td.st{font-weight:700;font-size:17px;width:104px}
+.chk label{display:flex;gap:14px;align-items:flex-start;font-size:22px;line-height:1.4;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.chk input{width:22px;height:22px;accent-color:var(--navy);flex:0 0 22px;margin-top:4px}
+.chkbar{height:12px;background:var(--card);border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-top:16px}
+.chkbar>span{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
+.rr{display:flex;justify-content:space-between;font-size:21px;padding:9px 2px;border-bottom:1px solid var(--line)}
+.rr b{color:var(--navy);font-size:24px}
+label.ipl{display:flex;gap:12px;align-items:flex-start;font-size:18px;line-height:1.35;margin-bottom:12px;cursor:pointer}
+label.ipl input{width:22px;height:22px;accent-color:var(--navy);flex:0 0 22px}
+table.rub{font-size:20px}
+table.rub td{text-align:left;vertical-align:top;line-height:1.4;padding:12px 14px}
+table.rub td:first-child{width:170px}
+table.rub th{font-size:19px;padding:10px}
+.wt{color:var(--muted);font-weight:500}
+
+@page{size:landscape}
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+<section class="slide title-slide" data-title="Title">
+  <span class="pill">2105625 &middot; CASEWORK II</span>
+  <p class="lecno">Project II &middot; Group casework brief</p>
+  <h1>Troubleshooting a Reactor OTS: TE5 by Systematic Problem Solving</h1>
+  <div class="rule"></div>
+  <p class="who"><b>Assoc. Prof. Dr. Apinan Soottitantawat</b><br>
+    Department of Chemical Engineering, Faculty of Engineering<br>
+    Chulalongkorn University</p>
+</section>
+
+<section class="slide" data-title="Agenda">
+  <div class="s-head"><p class="kicker">This brief</p><h2>What we will answer</h2></div>
+  <div class="grow agenda" style="gap:14px"><a class="agenda-item" href="#/3"><span class="no">A</span><span class="qq">What are we being asked to do?</span><span class="go">&#8594;</span></a><a class="agenda-item" href="#/9"><span class="no">B</span><span class="qq">Can you explain how the plant works from its drawings?</span><span class="go">&#8594;</span></a><a class="agenda-item" href="#/14"><span class="no">C</span><span class="qq">Where does one line of a HAZOP come from?</span><span class="go">&#8594;</span></a><a class="agenda-item" href="#/27"><span class="no">D</span><span class="qq">How do we solve TE5 systematically?</span><span class="go">&#8594;</span></a><a class="agenda-item" href="#/36"><span class="no">E</span><span class="qq">How will the work be judged?</span><span class="go">&#8594;</span></a></div>
+</section>
+
+<section class="slide section-slide" data-title="A · The assignment" data-sec="A · The assignment">
+  <div class="big">A</div>
+  <p class="lbl">A · The assignment</p>
+  <p class="q">What are we being asked to do?</p>
+</section>
+
+<section class="slide" data-title="Project II at a glance" id="glance">
+  <div class="s-head"><p class="kicker">Project II</p><h2>Operate, analyse, present</h2></div>
+
+  <div class="grow">
+    <div class="cards">
+      <div class="card card-blue"><h3>1 &middot; Operate</h3><p>Load <b>TE5</b> in your group&rsquo;s reactor OTS and troubleshoot it.</p><p style="font-size:16px;margin-top:8px;word-break:break-all"><a href="https://apinans.github.io/CUChemEOTS/" target="_blank" rel="noopener">apinans.github.io/CUChemEOTS</a></p></div>
+      <div class="card card-green"><h3>2 &middot; Analyse</h3><p>Explain the process and P&amp;ID, and one HAZOP guide word on the reactor node.</p></div>
+      <div class="card card-orange"><h3>3 &middot; Present</h3><p>20 min presentation, then 10 min of questions.</p></div>
+    </div>
+    <div class="callout q" style="margin-top:26px">4 groups &middot; 3 students each &middot; presentation file due <b>Sun 22 Nov 2026, 23:59</b></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Four groups" id="groups">
+  <div class="s-head"><p class="kicker">Groups</p><h2>Four groups, four reactors</h2></div>
+
+  <div class="grow">
+  <div class="cards wrap" style="gap:18px">
+    <div class="card card-blue" style="padding:18px 24px"><h3>Group 1 &middot; Batch Reactor of Cyclohexane</h3>
+      <p style="font-size:19px;line-height:1.45">Arisara Kleawtanong<br>Pinyada Eiamvijit<br>Kamolchanok Khomlek</p></div>
+    <div class="card card-green" style="padding:18px 24px"><h3>Group 2 &middot; Methanol Converter (Fixed Bed)</h3>
+      <p style="font-size:19px;line-height:1.45">Kunlanat Khachonsitthinopphakhun<br>Nattakarn Poonsil<br>Vachirawit Phinitnuk Boontham</p></div>
+    <div class="card card-orange" style="padding:18px 24px"><h3>Group 3 &middot; SO&#8323; Converter</h3>
+      <p style="font-size:19px;line-height:1.45">Apinya Chaiyapatmaetee<br>Viratee Nithithapanathada<br>Maneerat Ngorsakul</p></div>
+    <div class="card card-red" style="padding:18px 24px"><h3>Group 4 &middot; PVC Suspension Reactor (Tank)</h3>
+      <p style="font-size:19px;line-height:1.45">Chirasuta Chitchong<br>Nutnicha Wisetsakorn<br>Witchayut Nuangjakjoi</p></div>
+  </div>
+  <div class="callout aside" style="margin-top:16px;font-size:20px">Open your OTS here: <a href="https://apinans.github.io/CUChemEOTS/" target="_blank" rel="noopener">apinans.github.io/CUChemEOTS</a></div></div>
+</section>
+
+<section class="slide" data-title="Key dates" id="dates">
+  <div class="s-head"><p class="kicker">Interactive &middot; live countdown</p><h2>Key dates</h2></div>
+
+  <div class="sim">
+    <div class="stack">
+      <div class="callout"><b>Wed 4 Nov 2026</b> &middot; brief released</div>
+      <div class="callout q"><b>Sun 22 Nov 2026, 23:59</b> &middot; presentation file due</div>
+      <div class="callout aside"><b>Presentation day</b> &middot; date to be announced</div>
+    </div>
+    <div class="sim-out">
+      <div style="font-size:19px;color:var(--muted);font-weight:600">Time left to the file deadline (Bangkok time)</div>
+      <div class="bignum" id="cdDays">&ndash;</div>
+      <div style="font-size:24px;font-weight:600;color:var(--navy)" id="cdHms">&nbsp;</div>
+      <div style="font-size:17px;color:var(--muted);margin-top:8px" id="cdNote">&nbsp;</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Your path" id="path">
+  <div class="s-head"><p class="kicker">Interactive &middot; click a step</p><h2>Your path in six moves</h2></div>
+
+  <div class="sim" style="grid-template-columns:5fr 6fr">
+    <div class="stack" style="margin-top:0" id="stepList"></div>
+    <div class="sim-out" style="text-align:left;align-items:flex-start">
+      <div style="font-size:15px;font-weight:700;letter-spacing:.12em;color:var(--blue)" id="stepNo">STEP 1</div>
+      <div style="font-size:28px;font-weight:700;color:var(--navy);margin:6px 0 12px" id="stepTitle"></div>
+      <div style="font-size:21px;line-height:1.5" id="stepBody"></div>
+      <div style="font-size:17px;color:var(--green);font-weight:600;margin-top:14px" id="stepOut"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="What changed" id="changes">
+  <div class="s-head"><p class="kicker">Compared with last year</p><h2>What is different this year</h2></div>
+
+  <div class="grow">
+  <table class="compare">
+    <tr><th></th><th>Last year (fired heater)</th><th>This year (reactor OTS)</th></tr>
+    <tr><td>Group size</td><td>2 students</td><td style="color:var(--green)">3 students</td></tr>
+    <tr><td>Equipment</td><td>Natural-draft fired heater</td><td style="color:var(--green)">Four reactor OTS units, one per group</td></tr>
+    <tr><td>Process part</td><td>PFD analysis</td><td style="color:var(--green)">Process and P&amp;ID explained</td></tr>
+    <tr><td>HAZOP</td><td>Table for a given condition, with LOPA</td><td style="color:var(--green)">One guide word on the reactor node, with its derivation</td></tr>
+    <tr><td>Time</td><td>18 + 12 min</td><td style="color:var(--green)">20 + 10 min</td></tr>
+    <tr><td>Scoring</td><td>Three-skill rubric</td><td style="color:var(--green)">100-point rubric</td></tr>
+  </table></div>
+</section>
+
+<section class="slide section-slide" data-title="B · Process and P&ID" data-sec="B · Process and P&ID">
+  <div class="big">B</div>
+  <p class="lbl">B · Process and P&ID</p>
+  <p class="q">Can you explain how the plant works from its drawings?</p>
+</section>
+
+<section class="slide" data-title="What the process section must explain" id="bexplain">
+  <div class="s-head"><p class="kicker">Deliverable</p><h2>What your process section must explain</h2></div>
+
+  <div class="grow">
+    <div class="cards">
+      <div class="card card-blue"><h3>Working principles</h3><p>What each main item does, and why it is there.</p></div>
+      <div class="card card-green"><h3>Flow and movement</h3><p>Feed &rarr; reactor &rarr; product, plus utilities, step by step.</p></div>
+      <div class="card card-orange"><h3>Control system</h3><p>Controlled variable, manipulated variable, safety equipment.</p></div>
+    </div>
+    <div class="callout q" style="margin-top:26px">Could a classmate who never opened your OTS follow the plant after your four minutes?</div>
+  </div>
+</section>
+
+<section class="slide" data-title="Read the P&ID" id="pid">
+  <div class="s-head"><p class="kicker">Interactive &middot; click any symbol &middot; generic reactor, not your OTS</p><h2>Reading a P&amp;ID: what is each symbol for?</h2></div>
+
+  <div class="sim" style="grid-template-columns:3fr 2fr; gap:30px">
+    <div class="sim-out" style="padding:12px">
+<svg id="pid" viewBox="0 0 640 340" style="width:100%;max-height:100%">
+  <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#1F497D"/></marker></defs>
+  <g class="hot" data-k="jacket"><rect x="236" y="120" width="158" height="112" rx="10" fill="#DBEAFE" stroke="#4F81BD" stroke-width="2"/></g>
+  <g class="hot" data-k="reactor">
+    <rect x="250" y="80" width="130" height="190" rx="26" fill="#F7F9FC" stroke="#1F497D" stroke-width="3"/>
+    <line x1="315" y1="48" x2="315" y2="226" stroke="#1F497D" stroke-width="3"/>
+    <line x1="290" y1="222" x2="340" y2="222" stroke="#1F497D" stroke-width="4"/>
+    <rect x="300" y="30" width="30" height="18" fill="#1F497D"/>
+    <text x="283" y="112" font-size="16" font-weight="700" fill="#1F497D" text-anchor="middle">R-100</text>
+  </g>
+  <path d="M20 110 H250" stroke="#1F497D" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+  <text x="20" y="98" font-size="16" fill="#6B7280">Feed</text>
+  <g class="hot" data-k="fv"><polygon points="124,98 124,122 156,98 156,122" fill="#fff" stroke="#1F497D" stroke-width="2.5"/></g>
+  <line x1="140" y1="71" x2="140" y2="99" stroke="#1F497D" stroke-width="2" stroke-dasharray="5 4"/>
+  <g class="hot" data-k="fic"><circle cx="140" cy="50" r="21" fill="#fff" stroke="#1F497D" stroke-width="2.5"/><text x="140" y="55" font-size="14" font-weight="700" fill="#1F497D" text-anchor="middle">FIC</text></g>
+  <path d="M620 226 H394" stroke="#4F81BD" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+  <text x="620" y="214" font-size="16" fill="#6B7280" text-anchor="end">Coolant in</text>
+  <path d="M394 130 H620" stroke="#4F81BD" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+  <text x="620" y="120" font-size="16" fill="#6B7280" text-anchor="end">Coolant out</text>
+  <g class="hot" data-k="tv"><polygon points="504,214 504,238 536,214 536,238" fill="#fff" stroke="#1F497D" stroke-width="2.5"/></g>
+  <line x1="520" y1="271" x2="520" y2="239" stroke="#1F497D" stroke-width="2" stroke-dasharray="5 4"/>
+  <g class="hot" data-k="tic">
+    <path d="M499 292 H355 V205" stroke="#1F497D" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+    <circle cx="355" cy="205" r="5" fill="#1F497D"/>
+    <circle cx="520" cy="292" r="21" fill="#fff" stroke="#1F497D" stroke-width="2.5"/><text x="520" y="297" font-size="14" font-weight="700" fill="#1F497D" text-anchor="middle">TIC</text>
+  </g>
+  <g class="hot" data-k="psv">
+    <line x1="355" y1="80" x2="355" y2="56" stroke="#1F497D" stroke-width="3"/>
+    <polygon points="345,56 365,56 355,42" fill="#fff" stroke="#1F497D" stroke-width="2.5"/>
+    <polygon points="345,28 365,28 355,42" fill="#fff" stroke="#1F497D" stroke-width="2.5"/>
+    <path d="M365 42 H430" stroke="#1F497D" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+    <text x="440" y="47" font-size="16" font-weight="700" fill="#C00000">PSV</text>
+  </g>
+  <path d="M315 270 V322" stroke="#1F497D" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+  <text x="330" y="318" font-size="16" fill="#6B7280">Product</text>
+</svg></div>
+    <div class="stack" style="margin-top:0">
+      <div class="card" style="padding:20px 24px">
+        <h3 id="pidName" style="font-size:24px"></h3>
+        <p id="pidRole" style="font-size:20px"></p>
+        <p id="pidAsk" style="font-size:19px;color:var(--red);margin-top:12px;font-weight:600"></p>
+      </div>
+      <p class="small muted">Solid lines carry material. Dashed lines carry signals.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Control loop" id="loop">
+  <div class="s-head"><p class="kicker">Interactive &middot; drag the sliders</p><h2>Why does the valve move? A temperature loop</h2></div>
+
+  <div class="sim">
+    <div class="sim-controls">
+      <div class="sl"><label>Controller gain $K_c$ <span class="val" id="kcVal"></span></label>
+        <input type="range" id="kc" min="0" max="10" step="0.5" value="2"></div>
+      <div class="sl"><label>Disturbance (hot feed) <span class="val" id="dVal"></span></label>
+        <input type="range" id="dist" min="0" max="20" step="1" value="10"></div>
+      <div class="sl"><label style="justify-content:flex-start;gap:12px;cursor:pointer"><input type="checkbox" id="pi" style="width:22px;height:22px;accent-color:var(--navy)"> Add integral action (PI)</label></div>
+      <div class="callout note" style="font-size:19px">Proportional only leaves an offset.</div>
+    </div>
+    <div class="sim-out">
+      <svg viewBox="0 0 560 290" style="width:100%">
+        <line x1="50" y1="250" x2="540" y2="250" stroke="var(--muted)" stroke-width="2"/>
+        <line x1="50" y1="250" x2="50" y2="14" stroke="var(--muted)" stroke-width="2"/>
+        <text x="295" y="284" font-size="16" fill="var(--muted)" text-anchor="middle">time (s)</text>
+        <text x="16" y="135" font-size="16" fill="var(--muted)" transform="rotate(-90 16 135)" text-anchor="middle">T &#8722; setpoint (K)</text>
+        <text x="44" y="254" font-size="14" fill="var(--muted)" text-anchor="end">0</text>
+        <text x="44" y="22" font-size="14" fill="var(--muted)" text-anchor="end">20</text>
+        <polyline id="loopCurve" fill="none" stroke="var(--blue)" stroke-width="3"/>
+      </svg>
+      <div style="font-size:21px;font-weight:600;color:var(--navy)" id="loopOut"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Loop table" id="looptable">
+  <div class="s-head"><p class="kicker">Template &middot; fill one row per loop on your P&amp;ID</p><h2>Describe every loop the same way</h2></div>
+
+  <div class="grow">
+  <table class="compare" style="font-size:20px">
+    <tr><th>Loop</th><th>Controlled variable</th><th>Manipulated variable</th><th>Safety role</th></tr>
+    <tr><td>TIC</td><td>Reactor temperature</td><td>Coolant flow</td><td>Keeps heat removal matched</td></tr>
+    <tr><td>FIC</td><td>Feed flow</td><td>Feed valve opening</td><td>Limits heat generated</td></tr>
+    <tr><td>PSV</td><td>(none)</td><td>(none)</td><td style="color:var(--red)">Last-resort pressure relief</td></tr>
+  </table>
+  <div class="callout q" style="margin-top:22px">Name the sensor, controller, final element and fail position for each loop.</div>
+  </div>
+</section>
+
+<section class="slide section-slide" data-title="C · HAZOP of the reactor node" data-sec="C · HAZOP of the reactor node">
+  <div class="big">C</div>
+  <p class="lbl">C · HAZOP of the reactor node</p>
+  <p class="q">Where does one line of a HAZOP come from?</p>
+</section>
+
+<section class="slide" data-title="HAZOP in one picture" id="chain">
+  <div class="s-head"><p class="kicker">The logic</p><h2>A HAZOP line is a chain of eight answers</h2></div>
+
+  <div class="grow"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px"><div class="card card-blue" style="padding:18px 20px"><div class="chipno">1</div><h3 style="font-size:21px">Node</h3><p style="font-size:18px;line-height:1.4">Which part of the plant?</p></div><div class="card card-blue" style="padding:18px 20px"><div class="chipno">2</div><h3 style="font-size:21px">Design intent</h3><p style="font-size:18px;line-height:1.4">What should it do, in numbers?</p></div><div class="card card-blue" style="padding:18px 20px"><div class="chipno">3</div><h3 style="font-size:21px">Parameter</h3><p style="font-size:18px;line-height:1.4">Flow, temperature, pressure, level&hellip;</p></div><div class="card card-blue" style="padding:18px 20px"><div class="chipno">4</div><h3 style="font-size:21px">Guide word</h3><p style="font-size:18px;line-height:1.4">No, less, more, reverse&hellip;</p></div><div class="card card-red" style="padding:18px 20px"><div class="chipno">5</div><h3 style="font-size:21px">Deviation</h3><p style="font-size:18px;line-height:1.4">Parameter + guide word</p></div><div class="card card-orange" style="padding:18px 20px"><div class="chipno">6</div><h3 style="font-size:21px">Causes</h3><p style="font-size:18px;line-height:1.4">Why could it happen?</p></div><div class="card card-red" style="padding:18px 20px"><div class="chipno">7</div><h3 style="font-size:21px">Consequences</h3><p style="font-size:18px;line-height:1.4">Where does it end if nothing stops it?</p></div><div class="card card-green" style="padding:18px 20px"><div class="chipno">8</div><h3 style="font-size:21px">Safeguards and actions</h3><p style="font-size:18px;line-height:1.4">What protects us? What to add?</p></div></div>
+  <p class="small muted" style="margin-top:16px">Read left to right, top to bottom. Each answer feeds the next.</p></div>
+</section>
+
+<section class="slide" data-title="Guide words" id="words">
+  <div class="s-head"><p class="kicker">Vocabulary</p><h2>Guide words and what they mean</h2></div>
+
+  <div class="grow">
+  <table class="compare" style="font-size:20px">
+    <tr><th>Guide word</th><th>Meaning</th><th>Reactor example</th></tr>
+    <tr><td>No</td><td>Complete negation of the intent</td><td>No coolant flow</td></tr>
+    <tr><td>Less</td><td>Quantitative decrease</td><td>Less feed flow</td></tr>
+    <tr><td>More</td><td>Quantitative increase</td><td>More temperature</td></tr>
+    <tr><td>As well as</td><td>Something extra is present</td><td>Impurity as well as feed</td></tr>
+    <tr><td>Part of</td><td>Only part of the intent is achieved</td><td>Part of the feed reacts</td></tr>
+    <tr><td>Reverse</td><td>Opposite of the intent</td><td>Reverse flow in the feed line</td></tr>
+    <tr><td>Other than</td><td>Something else happens</td><td>Other material than feed</td></tr>
+  </table></div>
+</section>
+
+<section class="slide" data-title="Your guide word" id="assign">
+  <div class="s-head"><p class="kicker">Assignment</p><h2>Your reactor node and your guide word</h2></div>
+
+  <div class="grow">
+  <table class="compare" style="font-size:21px">
+    <tr><th>Group</th><th>OTS</th><th>Guide word and deviation</th></tr>
+    <tr><td>1</td><td>Batch Reactor of Cyclohexane</td><td style="color:var(--red);font-weight:700">More &middot; temperature</td></tr>
+    <tr><td>2</td><td>Methanol Converter (Fixed Bed)</td><td style="color:var(--red);font-weight:700">More &middot; pressure</td></tr>
+    <tr><td>3</td><td>SO&#8323; Converter</td><td style="color:var(--red);font-weight:700">Less &middot; flow (feed gas)</td></tr>
+    <tr><td>4</td><td>PVC Suspension Reactor (Tank)</td><td style="color:var(--red);font-weight:700">No &middot; flow (cooling medium)</td></tr>
+  </table>
+  <div class="callout note" style="margin-top:20px">Node = the reactor and the lines that feed, cool or heat, vent and drain it.</div>
+  </div>
+</section>
+
+<section class="slide" data-title="Step 1" id="step1">
+  <div class="s-head"><p class="kicker">Step 1 &middot; generic example reactor R-100, not your OTS</p><h2>Define the node and write its design intent with numbers</h2></div>
+
+  <div class="grow">
+    <div class="cards" style="grid-template-columns:1fr 1fr;grid-auto-flow:row">
+      <div class="card card-blue"><h3>Node</h3><p>Jacketed stirred-tank reactor R-100 with its feed line, coolant circuit and relief line.</p></div>
+      <div class="card card-green"><h3>Design intent</h3><p>Hold the batch near 62 &deg;C (limit 70 &deg;C) and below 3 bar(g) for the batch time.</p></div>
+    </div>
+    <div class="callout aside" style="margin-top:24px">A deviation only exists relative to an intent, so put numbers in the intent.</div>
+  </div>
+</section>
+
+<section class="slide" data-title="Step 2" id="step2">
+  <div class="s-head"><p class="kicker">Step 2 &middot; generic example</p><h2>Guide word + parameter = deviation</h2></div>
+
+  <div class="grow">
+    <div class="eq-box" style="font-size:36px;font-weight:700"><span style="color:var(--red)">More</span> &nbsp;+&nbsp; <span style="color:var(--navy)">temperature</span> &nbsp;=&nbsp; <span style="color:var(--red)">More temperature</span></div>
+    <p class="eq-note" style="font-size:21px">In numbers: above 65 &deg;C is a deviation, and 70 &deg;C is the design limit.</p>
+    <div class="callout q" style="margin-top:18px">Which parameter on <b>your</b> P&amp;ID matches your guide word?</div>
+  </div>
+</section>
+
+<section class="slide" data-title="Step 3 causes" id="step3">
+  <div class="s-head"><p class="kicker">Step 3 &middot; the origin of the causes</p><h2>Causes come from the energy balance</h2></div>
+
+  <div class="grow">
+    <div class="eq-box" style="font-size:27px;padding:22px 30px">$$\rho V c_p\frac{dT}{dt}=\underbrace{(-\Delta H)\,k_0e^{-E_a/RT}\,C\,V}_{\text{heat generated}}-\underbrace{UA\,(T-T_c)}_{\text{heat removed}}$$</div>
+    <div class="cards" style="grid-template-columns:1fr 1fr;grid-auto-flow:row;margin-top:14px">
+      <div class="card card-green" style="padding:16px 22px"><h3 style="font-size:21px">Generation up</h3><p style="font-size:19px">Higher $C$ (extra charge), higher $k$ (more catalyst, hot feed)</p></div>
+      <div class="card card-red" style="padding:16px 22px"><h3 style="font-size:21px">Removal down</h3><p style="font-size:19px">Lower $UA$ (fouling, poor mixing), higher $T_c$, low coolant flow</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Step 3 sim" id="sem">
+  <div class="s-head"><p class="kicker">Interactive &middot; generic reactor &middot; lumped model</p><h2>See the deviation happen: heat generated vs heat removed</h2></div>
+
+  <div class="sim">
+    <div class="sim-controls">
+      <div class="sl"><label>Reactant level factor <span class="val" id="cVal"></span></label>
+        <input type="range" id="cFac" min="0.6" max="1.6" step="0.05" value="1"></div>
+      <div class="sl"><label>Jacket $UA$ (fouling lowers it) <span class="val" id="uaVal"></span></label>
+        <input type="range" id="uaS" min="2.5" max="6" step="0.25" value="4"></div>
+      <div class="sl"><label>Coolant temperature $T_c$ <span class="val" id="tcVal"></span></label>
+        <input type="range" id="tcS" min="320" max="340" step="1" value="330"></div>
+    </div>
+    <div class="sim-out">
+      <svg viewBox="0 0 560 290" style="width:100%">
+        <line x1="50" y1="250" x2="540" y2="250" stroke="var(--muted)" stroke-width="2"/>
+        <line x1="50" y1="250" x2="50" y2="14" stroke="var(--muted)" stroke-width="2"/>
+        <text x="295" y="284" font-size="16" fill="var(--muted)" text-anchor="middle">reactor temperature (&deg;C)</text>
+        <text x="16" y="135" font-size="16" fill="var(--muted)" transform="rotate(-90 16 135)" text-anchor="middle">heat rate (kW)</text>
+        <line id="limLine" x1="0" y1="14" x2="0" y2="250" stroke="var(--orange)" stroke-width="2" stroke-dasharray="6 5"/>
+        <text id="limTxt" y="28" font-size="14" fill="var(--orange)">70 &deg;C limit</text>
+        <polyline id="genCurve" fill="none" stroke="var(--green)" stroke-width="3"/>
+        <polyline id="remLine" fill="none" stroke="var(--blue)" stroke-width="3"/>
+        <circle id="opDot" r="8" fill="var(--red)"/>
+        <text x="62" y="26" font-size="15" fill="var(--green)" font-weight="700">heat generated</text>
+        <text x="62" y="46" font-size="15" fill="var(--blue)" font-weight="700">heat removed</text>
+      </svg>
+      <div style="font-size:26px;font-weight:800" id="semOut"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Step 4 consequences" id="step4">
+  <div class="s-head"><p class="kicker">Step 4 &middot; generic example</p><h2>Follow the deviation until something stops it</h2></div>
+
+  <div class="grow">
+    <div class="flow"><div class="fstep"><p>Temperature above 70 &deg;C</p></div><div class="farrow">&#8594;</div><div class="fstep"><p>Rate &times;2.3 per +10 K</p></div><div class="farrow">&#8594;</div><div class="fstep"><p>Generation outruns removal</p></div><div class="farrow">&#8594;</div><div class="fstep"><p>Vapour and gas raise pressure</p></div><div class="farrow">&#8594;</div><div class="fstep fred"><p>PSV lifts or vessel fails</p></div></div>
+    <div class="eq-box" style="font-size:25px;margin-top:20px;padding:20px 28px">$\dfrac{k(T+10)}{k(T)}=\exp\!\left[\dfrac{E_a}{R}\left(\dfrac{1}{T}-\dfrac{1}{T+10}\right)\right]\approx 2.3$ &nbsp;for $E_a=80$ kJ/mol, $T\approx 335$ K</div>
+    <div class="callout q" style="margin-top:6px">Write the worst credible end of the chain, as if no safeguard acts.</div>
+  </div>
+</section>
+
+<section class="slide" data-title="Step 5 safeguards" id="step5">
+  <div class="s-head"><p class="kicker">Step 5 &middot; generic example</p><h2>Safeguards and recommendations</h2></div>
+
+  <div class="grow">
+    <div class="cards">
+      <div class="card card-blue"><h3>Prevent</h3><p>Cooling margin, temperature control, charge limits.</p></div>
+      <div class="card card-orange"><h3>Detect</h3><p>High-temperature alarm (TAH) and operator response.</p></div>
+      <div class="card card-green"><h3>Mitigate</h3><p>High-high trip (TSHH), relief valve (PSV).</p></div>
+    </div>
+    <div class="callout note" style="margin-top:24px">List only safeguards that exist on <b>your</b> P&amp;ID. Recommend an action only if the risk is still too high.</div>
+  </div>
+</section>
+
+<section class="slide" data-title="Worked row" id="row">
+  <div class="s-head"><p class="kicker">One finished example &middot; generic reactor R-100</p><h2>Two lines of the HAZOP table for one guide word</h2></div>
+
+  <div class="grow">
+  <table class="compare" style="font-size:20px">
+    <tr><th>Guide word</th><th>Deviation</th><th>Cause</th><th>Consequence</th><th>Safeguards</th><th>Recommendation</th></tr>
+    <tr><td>More</td><td>More temperature</td><td>Coolant valve fails closed</td><td>Runaway; PSV lifts</td><td>TAH alarm; PSV</td><td>Fail-open valve; add TSHH trip</td></tr>
+    <tr><td>More</td><td>More temperature</td><td>Jacket fouled ($UA$ falls)</td><td>Slow rise; off-spec product</td><td>TIC; operator rounds</td><td>Cleaning schedule; trend $UA$</td></tr>
+  </table>
+  <div class="callout aside" style="margin-top:22px">Same guide word, one row per cause. Every cell uses tags from the P&amp;ID.</div>
+  </div>
+</section>
+
+<section class="slide" data-title="LOPA" id="lopa">
+  <div class="s-head"><p class="kicker">Optional extra depth &middot; interactive &middot; example PFD values</p><h2>Is the remaining risk low enough? LOPA</h2></div>
+
+  <div class="sim">
+    <div class="sim-controls">
+      <div class="sl"><label>Initiating event (cooling fails) <span class="val" id="lfVal"></span></label>
+        <input type="range" id="lf" min="-2" max="0" step="0.5" value="-1"></div>
+      <div class="sl"><label>Target frequency <span class="val" id="ltVal"></span></label>
+        <input type="range" id="lt" min="-7" max="-3" step="1" value="-5"></div>
+      <label class="ipl"><input type="checkbox" id="ip1"> Operator responds to alarm (PFD 0.1)</label>
+      <label class="ipl"><input type="checkbox" id="ip2"> High-temperature trip, SIS (PFD 0.01)</label>
+      <label class="ipl"><input type="checkbox" id="ip3"> Relief valve PSV (PFD 0.01)</label>
+    </div>
+    <div class="sim-out">
+      <div style="font-size:18px;color:var(--muted);font-weight:600">Mitigated event frequency</div>
+      <div class="bignum" id="lopaF"></div>
+      <div style="font-size:24px;font-weight:700;margin-top:8px" id="lopaStat"></div>
+      <div style="font-size:17px;color:var(--muted);margin-top:8px" id="lopaGap"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="HAZOP checklist" id="hchk">
+  <div class="s-head"><p class="kicker">Self-check &middot; ticks are saved in this browser</p><h2>HAZOP section: what your slides must show</h2></div>
+
+  <div class="grow">
+    <div class="chk" data-key="hazop">
+      <label><input type="checkbox"> Node and design intent, with numbers</label>
+      <label><input type="checkbox"> Guide word + parameter = deviation</label>
+      <label><input type="checkbox"> Causes derived from a balance or the process logic</label>
+      <label><input type="checkbox"> Consequence chain to its worst credible end</label>
+      <label><input type="checkbox"> Safeguards named with P&amp;ID tags; recommendations justified</label>
+    </div>
+    <div class="chkbar"><span></span></div><p class="chkpct small muted"></p>
+  </div>
+</section>
+
+<section class="slide section-slide" data-title="D · Problem solving with the workbook" data-sec="D · Problem solving with the workbook">
+  <div class="big">D</div>
+  <p class="lbl">D · Problem solving with the workbook</p>
+  <p class="q">How do we solve TE5 systematically?</p>
+</section>
+
+<section class="slide" data-title="Six stages" id="stages">
+  <div class="s-head"><p class="kicker">Woods&rsquo; method</p><h2>Six stages, one record</h2></div>
+
+  <div class="grow">
+    <div class="flow">
+      <div class="fstep"><div class="chipno">1</div><h3>Engage</h3><p>Urgency and safety</p></div><div class="farrow">&#8594;</div>
+      <div class="fstep"><div class="chipno">2</div><h3>Define</h3><p>Problem and target</p></div><div class="farrow">&#8594;</div>
+      <div class="fstep"><div class="chipno">3</div><h3>Explore</h3><p>Causes and evidence</p></div><div class="farrow">&#8594;</div>
+      <div class="fstep"><div class="chipno">4</div><h3>Plan</h3><p>Tests and fixes</p></div><div class="farrow">&#8594;</div>
+      <div class="fstep"><div class="chipno">5</div><h3>Do it</h3><p>Run and apply</p></div><div class="farrow">&#8594;</div>
+      <div class="fstep"><div class="chipno">6</div><h3>Look back</h3><p>Result and lessons</p></div>
+    </div>
+    <div class="callout aside" style="margin-top:26px">The workbook adds Stage 0 (get ready). &ldquo;Look back&rdquo; is the stage called &ldquo;Evaluate&rdquo; in last year&rsquo;s brief.</div>
+  </div>
+</section>
+
+<section class="slide" data-title="The workbook" id="wb">
+  <div class="s-head"><p class="kicker">Your record of the investigation</p><h2>Use the troubleshooting workbook for every stage</h2></div>
+
+  <div class="two-col">
+    <ul class="clean">
+      <li>Open the workbook and select your OTS unit.</li>
+      <li>Stay in <b>Workshop</b> mode: 22 MUST sub-steps.</li>
+      <li>Use <b>Full</b> mode only when you need more detail.</li>
+      <li>Fill it while you run the OTS; screenshots are evidence.</li>
+    </ul>
+    <div class="stack">
+      <div class="card card-blue"><h3>Workbook</h3><p style="font-size:18px;word-break:break-all"><a href="https://apinans.github.io/2105412/TSWorkbook.html" target="_blank" rel="noopener">apinans.github.io/2105412/TSWorkbook.html</a></p></div>
+      <div class="card card-green"><h3>OTS catalogue</h3><p style="font-size:18px;word-break:break-all"><a href="https://apinans.github.io/CUChemEOTS/" target="_blank" rel="noopener">apinans.github.io/CUChemEOTS</a></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Stages 0 and 1" id="st01">
+  <div class="s-head"><p class="kicker">Stage guide</p><h2>Stage 0 &middot; Get ready and Stage 1 &middot; Engage</h2></div>
+<div class="grow"><div class="cards" style="grid-template-columns:1fr 1fr;grid-auto-flow:row;gap:22px"><div class="card card-blue"><h3>Stage 0 &middot; Get ready</h3><p class="qq">What do the instruments actually show?</p><p class="sm"><b>MUST sub-steps:</b> 0.2 &middot; 0.3</p><p class="sm"><b>On your slides:</b> Symptom record and trend, with times and units.</p></div><div class="card card-orange"><h3>Stage 1 &middot; Engage</h3><p class="qq">How urgent is it, and is the plant safe while we investigate?</p><p class="sm"><b>MUST sub-steps:</b> 1.3 &middot; 1.4</p><p class="sm"><b>On your slides:</b> Urgency judgement and the safe-state decision.</p></div></div></div>
+</section>
+
+<section class="slide" data-title="Stages 2 and 3" id="st23">
+  <div class="s-head"><p class="kicker">Stage guide</p><h2>Stage 2 &middot; Define and Stage 3 &middot; Explore</h2></div>
+<div class="grow"><div class="cards" style="grid-template-columns:1fr 1fr;grid-auto-flow:row;gap:22px"><div class="card card-blue"><h3>Stage 2 &middot; Define</h3><p class="qq">What exactly is wrong, and what is the target?</p><p class="sm"><b>MUST sub-steps:</b> 2.5 &middot; 2.7 &middot; 2.9 &middot; 2.11</p><p class="sm"><b>On your slides:</b> Problem statement, target with cost, key unknown.</p></div><div class="card card-green"><h3>Stage 3 &middot; Explore</h3><p class="qq">Which causes could explain every symptom?</p><p class="sm"><b>MUST sub-steps:</b> 3.2 &middot; 3.4 &middot; 3.6</p><p class="sm"><b>On your slides:</b> Fundamentals review, cause map, hypotheses against evidence.</p></div></div></div>
+</section>
+
+<section class="slide" data-title="Stages 4 and 5" id="st45">
+  <div class="s-head"><p class="kicker">Stage guide</p><h2>Stage 4 &middot; Plan and Stage 5 &middot; Do it</h2></div>
+<div class="grow"><div class="cards" style="grid-template-columns:1fr 1fr;grid-auto-flow:row;gap:22px"><div class="card card-orange"><h3>Stage 4 &middot; Plan</h3><p class="qq">Which test comes first, and what would kill each hypothesis?</p><p class="sm"><b>MUST sub-steps:</b> 4.3 &middot; 4.6 &middot; 4.8</p><p class="sm"><b>On your slides:</b> Ranked test plan with cost, time, risk and kill criteria.</p></div><div class="card card-blue"><h3>Stage 5 &middot; Do it</h3><p class="qq">What did the plant tests show, and did the fix work?</p><p class="sm"><b>MUST sub-steps:</b> 5.0 &middot; 5.1 &middot; 5.5 &middot; 5.6</p><p class="sm"><b>On your slides:</b> Trend screenshots before and after each change.</p></div></div></div>
+</section>
+
+<section class="slide" data-title="Stage 6" id="st6">
+  <div class="s-head"><p class="kicker">Stage guide</p><h2>Stage 6 &middot; Look back, then tell the story</h2></div>
+
+  <div class="grow">
+    <div class="cards" style="grid-template-columns:1fr;grid-auto-flow:row">
+      <div class="card card-green"><h3>Stage 6 &middot; Look back</h3><p class="qq">Is it solved, at what cost, and what did we learn?</p><p class="sm"><b>MUST sub-steps:</b> 6.1 &middot; 6.4 &middot; 6.5 &nbsp;&nbsp; <b>On your slides:</b> result against the target, cost, lessons, HAZOP update.</p></div>
+    </div>
+    <div class="flow" style="margin-top:22px">
+      <div class="fstep"><p><b>Symptom</b><br>what you saw</p></div><div class="farrow">&#8594;</div>
+      <div class="fstep"><p><b>Root cause</b><br>why it happened</p></div><div class="farrow">&#8594;</div>
+      <div class="fstep fgreen"><p><b>Remedy + evidence</b><br>what fixed it, shown</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Hypotheses" id="sdn">
+  <div class="s-head"><p class="kicker">Interactive &middot; generic example &middot; click a cell to cycle S &rarr; D &rarr; N</p><h2>Explore: test every hypothesis against the evidence</h2></div>
+
+  <div class="sim" style="grid-template-columns:3fr 2fr;gap:30px;align-items:start">
+    <div>
+      <table class="compare sdn" style="font-size:19px">
+        <tr><th>Hypothesis</th><th>Ev1</th><th>Ev2</th><th>Ev3</th><th>Status</th></tr>
+        <tr><td>H1 Coolant supply too warm</td><td class="cell" data-r="0" data-c="0"></td><td class="cell" data-r="0" data-c="1"></td><td class="cell" data-r="0" data-c="2"></td><td class="st"></td></tr>
+        <tr><td>H2 Jacket fouled</td><td class="cell" data-r="1" data-c="0"></td><td class="cell" data-r="1" data-c="1"></td><td class="cell" data-r="1" data-c="2"></td><td class="st"></td></tr>
+        <tr><td>H3 Reactor overcharged</td><td class="cell" data-r="2" data-c="0"></td><td class="cell" data-r="2" data-c="1"></td><td class="cell" data-r="2" data-c="2"></td><td class="st"></td></tr>
+        <tr><td>H4 Coolant flow too low</td><td class="cell" data-r="3" data-c="0"></td><td class="cell" data-r="3" data-c="1"></td><td class="cell" data-r="3" data-c="2"></td><td class="st"></td></tr>
+      </table>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="ptool" id="sdnShow" style="font-size:16px">Show expert answer</button>
+        <button class="ptool" id="sdnClear" style="font-size:16px">Clear</button>
+      </div>
+    </div>
+    <div>
+      <p class="kicker" style="margin-bottom:8px">Symptom: temperature creeps up</p>
+      <ul class="clean sm">
+        <li><b>Ev1</b> Coolant outlet &minus; inlet difference is smaller than normal</li>
+        <li><b>Ev2</b> Coolant inlet temperature is normal</li>
+        <li><b>Ev3</b> Feed totalizer shows the normal charge</li>
+      </ul>
+      <p class="small muted">S supports &middot; D disputes (kills) &middot; N neutral</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Problem-solving checklist" id="pchk">
+  <div class="s-head"><p class="kicker">Self-check &middot; ticks are saved in this browser</p><h2>Problem-solving section: what your slides must show</h2></div>
+
+  <div class="grow">
+    <div class="chk" data-key="ps">
+      <label><input type="checkbox"> Stages 0&ndash;1: symptom record, urgency and safe state</label>
+      <label><input type="checkbox"> Stage 2: problem statement and target with cost</label>
+      <label><input type="checkbox"> Stage 3: cause map and hypotheses killed or kept by evidence</label>
+      <label><input type="checkbox"> Stage 4: ranked plan of tests, with kill criteria</label>
+      <label><input type="checkbox"> Stage 5: OTS trends before and after, times and units</label>
+      <label><input type="checkbox"> Stage 6: result against target, cost and lessons</label>
+    </div>
+    <div class="chkbar"><span></span></div><p class="chkpct small muted"></p>
+  </div>
+</section>
+
+<section class="slide section-slide" data-title="E · Presenting and grading" data-sec="E · Presenting and grading">
+  <div class="big">E</div>
+  <p class="lbl">E · Presenting and grading</p>
+  <p class="q">How will the work be judged?</p>
+</section>
+
+<section class="slide" data-title="Format" id="format">
+  <div class="s-head"><p class="kicker">Presentation day</p><h2>30 minutes per group</h2></div>
+
+  <div class="grow">
+    <svg viewBox="0 0 1136 110" style="width:100%;max-height:110px">
+      <rect x="0" y="20" width="757" height="56" rx="10" fill="var(--blue)"/>
+      <rect x="763" y="20" width="373" height="56" rx="10" fill="var(--orange)"/>
+      <text x="378" y="56" font-size="24" font-weight="700" fill="#fff" text-anchor="middle">Presentation &middot; 20 min</text>
+      <text x="950" y="56" font-size="24" font-weight="700" fill="#fff" text-anchor="middle">Questions &middot; 10 min</text>
+      <text x="0" y="100" font-size="16" fill="var(--muted)">0</text><text x="757" y="100" font-size="16" fill="var(--muted)" text-anchor="middle">20</text><text x="1136" y="100" font-size="16" fill="var(--muted)" text-anchor="end">30 min</text>
+    </svg>
+    <ul class="clean" style="margin-top:18px">
+      <li>Present the process, the HAZOP and the problem solving in 20 minutes.</li>
+      <li>Answer questions for 10 minutes.</li>
+      <li>Present from the file you submitted.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-title="Time planner" id="planner">
+  <div class="s-head"><p class="kicker">Interactive &middot; plan your 20 minutes</p><h2>Split your 20 minutes</h2></div>
+
+  <div class="sim">
+    <div class="sim-controls">
+      <div class="sl"><label>Process and P&amp;ID <span class="val" id="t1v"></span></label><input type="range" id="t1" min="0" max="14" step="0.5" value="4"></div>
+      <div class="sl"><label>HAZOP, one guide word <span class="val" id="t2v"></span></label><input type="range" id="t2" min="0" max="14" step="0.5" value="4"></div>
+      <div class="sl"><label>Problem solving, six stages <span class="val" id="t3v"></span></label><input type="range" id="t3" min="0" max="14" step="0.5" value="10"></div>
+      <div class="sl"><label>Wrap-up <span class="val" id="t4v"></span></label><input type="range" id="t4" min="0" max="14" step="0.5" value="2"></div>
+    </div>
+    <div class="sim-out">
+      <div id="tbar" style="display:flex;height:46px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#fff"></div>
+      <div class="bignum" id="tTot" style="margin-top:18px"></div>
+      <div style="font-size:19px;font-weight:600" id="tMsg"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Slide plan" id="plan">
+  <div class="s-head"><p class="kicker">Suggestion</p><h2>A suggested slide plan</h2></div>
+
+  <div class="grow">
+  <table class="compare" style="font-size:21px">
+    <tr><th>Part</th><th>Minutes</th><th>Slides</th></tr>
+    <tr><td>Process and P&amp;ID</td><td>4</td><td>4 to 5</td></tr>
+    <tr><td>HAZOP, one guide word</td><td>4</td><td>4 to 5</td></tr>
+    <tr><td>Problem solving, six stages</td><td>10</td><td>8 to 10</td></tr>
+    <tr><td>Wrap-up</td><td>2</td><td>1 to 2</td></tr>
+    <tr><td style="color:var(--muted)">Appendix (not presented)</td><td>&ndash;</td><td>full HAZOP table, workbook screenshots</td></tr>
+  </table></div>
+</section>
+
+<section class="slide" data-title="Rubric overview" id="rubover">
+  <div class="s-head"><p class="kicker">Rubric &middot; 100 points</p><h2>Where the 100 points go</h2></div>
+
+  <div class="grow">
+    <div class="cards" style="grid-template-columns:1fr 1fr;grid-auto-flow:row;gap:26px">
+      <div class="card card-blue"><h3 style="font-size:24px">Presentation day &middot; 40</h3>
+        <div class="rr"><span>Presentation skills</span><b>15</b></div>
+        <div class="rr"><span>Questions and answers</span><b>15</b></div>
+        <div class="rr"><span>Plan and time management</span><b>10</b></div></div>
+      <div class="card card-green"><h3 style="font-size:24px">Presentation file &middot; 60</h3>
+        <div class="rr"><span>Process and P&amp;ID</span><b>15</b></div>
+        <div class="rr"><span>HAZOP, one guide word</span><b>15</b></div>
+        <div class="rr"><span>Problem solving, six stages</span><b>20</b></div>
+        <div class="rr"><span>Slide quality</span><b>10</b></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Rubric calculator" id="rubcalc">
+  <div class="s-head"><p class="kicker">Interactive &middot; self-assess your group &middot; 0 = not delivered</p><h2>Try the rubric</h2></div>
+
+  <div class="sim" style="grid-template-columns:5fr 3fr;gap:36px">
+    <div class="sim-controls"><div class="sl" style="margin-bottom:9px"><label style="font-size:17px;margin-bottom:3px">Presentation skills <span style="color:var(--muted)">(15)</span> <span class="val" id="rv0"></span></label><input type="range" class="rubs" data-w="15" id="rs0" min="0" max="5" step="1" value="3" style="height:24px"></div><div class="sl" style="margin-bottom:9px"><label style="font-size:17px;margin-bottom:3px">Questions and answers <span style="color:var(--muted)">(15)</span> <span class="val" id="rv1"></span></label><input type="range" class="rubs" data-w="15" id="rs1" min="0" max="5" step="1" value="3" style="height:24px"></div><div class="sl" style="margin-bottom:9px"><label style="font-size:17px;margin-bottom:3px">Plan and time management <span style="color:var(--muted)">(10)</span> <span class="val" id="rv2"></span></label><input type="range" class="rubs" data-w="10" id="rs2" min="0" max="5" step="1" value="3" style="height:24px"></div><div class="sl" style="margin-bottom:9px"><label style="font-size:17px;margin-bottom:3px">Process and P&ID <span style="color:var(--muted)">(15)</span> <span class="val" id="rv3"></span></label><input type="range" class="rubs" data-w="15" id="rs3" min="0" max="5" step="1" value="3" style="height:24px"></div><div class="sl" style="margin-bottom:9px"><label style="font-size:17px;margin-bottom:3px">HAZOP, one guide word <span style="color:var(--muted)">(15)</span> <span class="val" id="rv4"></span></label><input type="range" class="rubs" data-w="15" id="rs4" min="0" max="5" step="1" value="3" style="height:24px"></div><div class="sl" style="margin-bottom:9px"><label style="font-size:17px;margin-bottom:3px">Problem solving, six stages <span style="color:var(--muted)">(20)</span> <span class="val" id="rv5"></span></label><input type="range" class="rubs" data-w="20" id="rs5" min="0" max="5" step="1" value="3" style="height:24px"></div><div class="sl" style="margin-bottom:9px"><label style="font-size:17px;margin-bottom:3px">Slide quality <span style="color:var(--muted)">(10)</span> <span class="val" id="rv6"></span></label><input type="range" class="rubs" data-w="10" id="rs6" min="0" max="5" step="1" value="3" style="height:24px"></div></div>
+    <div class="sim-out">
+      <div style="font-size:18px;color:var(--muted);font-weight:600">Score</div>
+      <div class="bignum" id="rubTot"></div>
+      <div style="font-size:17px;color:var(--muted);margin-top:8px">points = weight &times; level &divide; 5</div>
+      <div style="font-size:17px;color:var(--muted);margin-top:14px" id="rubSplit"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Rubric: presentation skills and questions" id="rub1">
+  <div class="s-head"><p class="kicker">Rubric &middot; presentation day</p><h2>Rubric: presentation skills and questions</h2></div>
+
+  <div class="grow">
+  <table class="compare rub"><tr><th>Criterion</th><th>1 &middot; Needs improvement</th><th>3 &middot; Good</th><th>5 &middot; Excellent</th></tr><tr><td>Presentation skills <span class="wt">(15)</span></td><td>Reads from slides, speaks too quietly, little eye contact, one speaker carries the talk.</td><td>Clear voice, good eye contact, mostly speaks freely, the talk is shared between members.</td><td>Confident, well paced and engaging; speaks without notes; all members contribute smoothly.</td></tr><tr><td>Questions and answers <span class="wt">(15)</span></td><td>Cannot answer, repeats the slides, unsure of own results.</td><td>Answers most questions correctly using the group&rsquo;s own results; some gaps in reasoning.</td><td>Accurate, concise answers that explain why, with OTS evidence; every member answers.</td></tr></table>
+  <p class="small muted" style="margin-top:12px">Levels 2 and 4 sit between the descriptions. Points = weight &times; level &divide; 5.</p></div>
+</section>
+
+<section class="slide" data-title="Rubric: plan and process" id="rub2">
+  <div class="s-head"><p class="kicker">Rubric &middot; presentation day and file</p><h2>Rubric: plan and process</h2></div>
+
+  <div class="grow">
+  <table class="compare rub"><tr><th>Criterion</th><th>1 &middot; Needs improvement</th><th>3 &middot; Good</th><th>5 &middot; Excellent</th></tr><tr><td>Plan and time management <span class="wt">(10)</span></td><td>No clear structure; far over or under 20 minutes; weak opening and closing.</td><td>Logical order and clear transitions; within about 2 minutes of 20; opening and closing present.</td><td>Smooth story from plant to root cause; finishes in 20 minutes; memorable conclusion.</td></tr><tr><td>Process and P&amp;ID <span class="wt">(15)</span></td><td>Equipment listed without functions; flow or control loops missing or wrong.</td><td>Working principle and function of main equipment explained; flow path and main loops correct.</td><td>Every main item explained; material and signal flow traced; CV, MV and safety equipment identified from the P&amp;ID.</td></tr></table>
+  <p class="small muted" style="margin-top:12px">Levels 2 and 4 sit between the descriptions. Points = weight &times; level &divide; 5.</p></div>
+</section>
+
+<section class="slide" data-title="Rubric: HAZOP and problem solving" id="rub3">
+  <div class="s-head"><p class="kicker">Rubric &middot; presentation file</p><h2>Rubric: HAZOP and problem solving</h2></div>
+
+  <div class="grow">
+  <table class="compare rub"><tr><th>Criterion</th><th>1 &middot; Needs improvement</th><th>3 &middot; Good</th><th>5 &middot; Excellent</th></tr><tr><td>HAZOP, one guide word <span class="wt">(15)</span></td><td>Guide word listed without reasoning; causes and consequences are generic.</td><td>Deviation, causes, consequences, safeguards and recommendations complete, tied to P&amp;ID tags.</td><td>Shows where each line comes from: intent, deviation, causes, consequence chain, safeguards; actions justified by risk (LOPA optional).</td></tr><tr><td>Problem solving, six stages <span class="wt">(20)</span></td><td>Stages skipped or in name only; root cause stated without evidence.</td><td>All six stages shown in order from the workbook; root cause supported by some OTS evidence; fix applied.</td><td>Key output of every stage shown; hypotheses killed or kept by evidence; fix verified against the target; lessons recorded.</td></tr></table>
+  <p class="small muted" style="margin-top:12px">Levels 2 and 4 sit between the descriptions. Points = weight &times; level &divide; 5.</p></div>
+</section>
+
+<section class="slide" data-title="Rubric: slide quality" id="rub4">
+  <div class="s-head"><p class="kicker">Rubric &middot; presentation file</p><h2>Rubric: slide quality</h2></div>
+
+  <div class="grow">
+  <table class="compare rub"><tr><th>Criterion</th><th>1 &middot; Needs improvement</th><th>3 &middot; Good</th><th>5 &middot; Excellent</th></tr><tr><td>Slide quality <span class="wt">(10)</span></td><td>Cluttered, text-heavy slides; unreadable figures; many errors.</td><td>Clear and concise slides; readable figures; consistent style.</td><td>Professional, visual-first slides; annotated P&amp;ID and trends; one point per slide; no errors.</td></tr></table>
+  <p class="small muted" style="margin-top:12px">Levels 2 and 4 sit between the descriptions. Points = weight &times; level &divide; 5.</p></div>
+</section>
+
+<section class="slide" data-title="Submission" id="submit">
+  <div class="s-head"><p class="kicker">Deadline</p><h2>Submit by Sunday 22 November, 23:59</h2></div>
+
+  <div class="grow">
+    <div class="cards">
+      <div class="card card-blue"><h3>What</h3><p>One presentation file (.pptx) per group.</p></div>
+      <div class="card card-green"><h3>Where</h3><p>Upload to MyCV.</p></div>
+      <div class="card card-red"><h3>When</h3><p>Sun 22 Nov 2026, 23:59.</p></div>
+    </div>
+    <div class="callout aside" style="margin-top:24px">On the day, present from the file downloaded from MyCV. Put the full HAZOP table and workbook screenshots in an appendix.</div>
+  </div>
+</section>
+
+<section class="slide" data-title="Submission checklist" id="schk">
+  <div class="s-head"><p class="kicker">Self-check &middot; ticks are saved in this browser</p><h2>Before you upload</h2></div>
+
+  <div class="grow">
+    <div class="chk" data-key="sub">
+      <label><input type="checkbox"> Process and P&amp;ID section covers equipment, flow and control loops</label>
+      <label><input type="checkbox"> HAZOP shows one guide word with its derivation</label>
+      <label><input type="checkbox"> Problem solving shows six stages with OTS evidence</label>
+      <label><input type="checkbox"> Rehearsed with a timer: 20 minutes or less</label>
+      <label><input type="checkbox"> All three members can answer on any slide</label>
+      <label><input type="checkbox"> Uploaded to MyCV before Sun 22 Nov, 23:59</label>
+    </div>
+    <div class="chkbar"><span></span></div><p class="chkpct small muted"></p>
+  </div>
+</section>
+
+<section class="slide" data-title="Key takeaways" id="take">
+  <div class="s-head"><p class="kicker">Exit ticket</p><h2>Key Takeaways</h2></div>
+
+  <div class="grow">
+    <div class="tk"><div class="n">1</div><p>Explain the plant from its P&amp;ID before you troubleshoot it.</p></div>
+    <div class="tk"><div class="n">2</div><p>Show where one HAZOP line comes from, step by step.</p></div>
+    <div class="tk"><div class="n">3</div><p>Run TE5 through six stages, with OTS evidence at each.</p></div>
+    <div class="tk"><div class="n">4</div><p>20 minutes talk, 10 minutes questions, file due Sun 22 Nov, 23:59.</p></div>
+  </div>
+</section>
+
+</div>
+
+<div id="progress"></div>
+<div id="hud">
+  <button id="btnToc" title="Contents (T)">☰</button>
+  <button id="btnPrev" title="Previous (←)">‹</button>
+  <button id="btnNext" title="Next (→)">›</button>
+</div>
+<!-- Phone voter page: the SAME file opened as index.html?poll=ROOM shows this instead of the deck -->
+<div id="voter">
+  <div class="v-head">
+    <span class="v-room">ROOM<b id="vRoom">&mdash;</b></span>
+    <span class="v-stat" id="vStat"></span>
+  </div>
+  <div id="vBody"></div>
+  <p class="v-foot">COURSE CODE &middot; Lecture title<br>
+    Keep this page open all class &mdash; each new question appears by itself.</p>
+</div>
+
+<div id="toc"><div class="panel"><h3>CONTENTS</h3><div id="tocList"></div></div></div>
+
+<script>
+/* ================= Deck engine ================= */
+const DECK_META = { course: '2105625 · Casework II' };  // footer text — set per deck
+
+const el = id => document.getElementById(id);
+const cs = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+function fmt(x, d = 3){
+  if (!isFinite(x)) return '–';
+  if (x !== 0 && (Math.abs(x) < 1e-3 || Math.abs(x) >= 1e5)) return x.toExponential(d - 1);
+  return parseFloat(x.toPrecision(d)).toString();
+}
+function mix(c1, c2, t){
+  const p = c => [1,3,5].map(i => parseInt(c.slice(i, i + 2), 16));
+  const a = p(c1), b = p(c2);
+  return '#' + a.map((v, i) => Math.round(v + (b[i] - v) * t).toString(16).padStart(2, '0')).join('');
+}
+
+const Deck = (() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  let cur = -1;
+  const enterCbs = [];   // {key, fn, once, fired}
+
+  // footer stamping
+  let _sec = '';
+  slides.forEach((s, i) => {
+    if (s.dataset.sec) _sec = s.dataset.sec;
+    if (s.classList.contains('title-slide') || s.classList.contains('section-slide') || s.dataset.nofooter !== undefined) return;
+    const f = document.createElement('div');
+    f.className = 's-foot';
+    f.innerHTML = `<span>${DECK_META.course}</span><span class="s-sec">${_sec}</span><span>${i + 1} / ${slides.length}</span>`;
+    s.appendChild(f);
+  });
+
+  function goTo(i){
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    if (i === cur) return;
+    if (cur >= 0) slides[cur].classList.remove('active');
+    cur = i;
+    slides[cur].classList.add('active');
+    location.hash = '#/' + (cur + 1);
+    el('progress').style.width = ((cur + 1) / slides.length * 100) + '%';
+    [...document.querySelectorAll('#tocList a')].forEach((a, j) => a.classList.toggle('cur', j === cur));
+    fireEnter(false);
+  }
+  function fireEnter(onlyUnfired){
+    enterCbs.forEach(c => {
+      const hit = (typeof c.key === 'number') ? c.key === cur : slides[cur].id === c.key;
+      if (!hit) return;
+      if (onlyUnfired && c.fired) return;
+      if (c.once && c.fired) return;
+      try{ c.fn(); c.fired = true; }catch(e){ console.error(e); }
+    });
+  }
+  // Deep-link safety: if the first slide shown needs a CDN lib (e.g. Chart.js) that
+  // hasn't loaded yet, its enter callback throws; retry once everything has loaded.
+  addEventListener('load', () => fireEnter(true));
+  function onEnter(key, fn, opts = {}){ enterCbs.push({ key, fn, once: !!opts.once, fired: false }); }
+
+  // TOC
+  const list = el('tocList');
+  slides.forEach((s, i) => {
+    if (s.dataset.sec){ const h = document.createElement('div'); h.className = 'sec'; h.textContent = s.dataset.sec; list.appendChild(h); }
+    const a = document.createElement('a');
+    a.href = '#/' + (i + 1);
+    a.textContent = (i + 1) + '. ' + (s.dataset.title || s.querySelector('h1,h2,.q')?.textContent.slice(0, 60) || 'Slide');
+    a.onclick = e => { e.preventDefault(); goTo(i); toc(false); };
+    list.appendChild(a);
+  });
+  function toc(open){ el('toc').classList.toggle('open', open ?? !el('toc').classList.contains('open')); }
+  el('toc').addEventListener('click', e => { if (e.target === el('toc')) toc(false); });
+  el('btnToc').onclick = () => toc();
+  el('btnPrev').onclick = () => goTo(cur - 1);
+  el('btnNext').onclick = () => goTo(cur + 1);
+
+  // keyboard
+  addEventListener('keydown', e => {
+    if (['ArrowRight',' ','PageDown'].includes(e.key)){ e.preventDefault(); goTo(cur + 1); }
+    else if (['ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); goTo(cur - 1); }
+    else if (e.key === 'Home') goTo(0);
+    else if (e.key === 'End') goTo(slides.length - 1);
+    else if (e.key.toLowerCase() === 't') toc();
+    else if (e.key === 'Escape') toc(false);
+    else if (e.key.toLowerCase() === 'f'){ document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+    else if (e.key.toLowerCase() === 'o') debugOverflow();
+  });
+
+  // Overflow debugger (press O): measures every slide against the 1280x720 stage,
+  // outlines offenders in red and lists them in the console. Use before class.
+  function debugOverflow(){
+    const st = el('stage').getBoundingClientRect();
+    const sc = st.width / 1280;
+    const report = [];
+    slides.forEach((s, i) => {
+      const wasActive = s.classList.contains('active');
+      if (!wasActive) s.classList.add('active');
+      s.querySelectorAll('*').forEach(n => {
+        const r = n.getBoundingClientRect();
+        if ((!r.width && !r.height) || n.closest('.q-explain')) return;
+        const past = Math.max(r.bottom - st.bottom, r.right - st.right) / sc;
+        if (past > 2){
+          n.style.outline = '3px solid red';
+          report.push(`slide ${i + 1}: <${n.tagName.toLowerCase()} class="${n.className}"> ${Math.round(past)}px past edge`);
+        }
+      });
+      if (!wasActive) s.classList.remove('active');
+    });
+    if (report.length){ console.warn('OVERFLOW REPORT\n' + report.join('\n')); }
+    window.__overflowReport = report;
+    alert(report.length ? report.length + ' overflowing element(s) outlined red - see console' : 'No overflow - all slides fit 1280x720');
+    return report;
+  }
+
+  // swipe
+  let x0 = null;
+  addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+  addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) goTo(cur + (dx < 0 ? 1 : -1));
+    x0 = null;
+  }, { passive: true });
+
+  // scale stage to window
+  function fit(){
+    const s = Math.min(innerWidth / 1280, innerHeight / 720) * 0.98;
+    el('stage').style.transform = `translate(-50%,-50%) scale(${s})`;
+  }
+  addEventListener('resize', fit); fit();
+
+  // hash routing (agenda links, deep links, back/forward)
+  function hashIndex(){ const m = location.hash.match(/#\/(\d+)/); return m ? +m[1] - 1 : NaN; }
+  addEventListener('hashchange', () => { const i = hashIndex(); if (!isNaN(i) && i !== cur) goTo(i); });
+  const h0 = hashIndex();
+  goTo(isNaN(h0) ? 0 : h0);
+
+  return { goTo, onEnter, get current(){ return cur; }, get count(){ return slides.length; } };
+})();
+
+/* ================= KaTeX ================= */
+const KATEX_OPTS = { delimiters: [
+  { left: '$$', right: '$$', display: true },
+  { left: '$', right: '$', display: false },
+  { left: '\\(', right: '\\)', display: false },
+  { left: '\\[', right: '\\]', display: true }
+], throwOnError: false };
+document.addEventListener('DOMContentLoaded', () => {
+  const tryRender = () => window.renderMathInElement
+    ? renderMathInElement(document.body, KATEX_OPTS)
+    : setTimeout(tryRender, 120);
+  tryRender();
+});
+
+/* ================= Quiz engine (per-group scoring + overall % + round history) =================
+   Students retake the deck's quizzes: Reset clears the answers but NEVER the history, so round 1,
+   2, 3 … stay side by side and improvement is visible. Each finished round is stamped with the
+   clock time it was completed. History is mirrored to localStorage so it also survives a reload;
+   if storage is unavailable (file:// in some browsers, private mode) it degrades to memory only. */
+const QUIZ_TEXT = {           /* translate these for a Thai deck (e.g. round:'รอบที่', finished:'เสร็จเมื่อ') */
+  score: 'Quiz score', total: 'Total', round: 'Round', finished: 'finished',
+  inProgress: 'in progress', unanswered: 'unanswered', partial: 'partial',
+  noAttempts: 'No finished round yet — answer every question, then press Reset to try again.',
+  showing: 'showing the latest', of: 'of', rounds: 'rounds'
+};
+const Quiz = { score: 0, answered: 0, total: document.querySelectorAll('.quiz-q').length, groups: {}, attempts: [], logged: false };
+/* Assign each question to a quiz group (nearest ancestor with data-quiz-group) and tally group totals. */
+document.querySelectorAll('.quiz-q').forEach(q => {
+  const sec = q.closest('[data-quiz-group]');
+  const gid = sec ? sec.dataset.quizGroup : 'default';
+  const label = sec && sec.dataset.quizLabel ? sec.dataset.quizLabel : gid;
+  if (!Quiz.groups[gid]) Quiz.groups[gid] = { label, total: 0, score: 0, answered: 0 };
+  Quiz.groups[gid].total++;
+  q.dataset.group = gid;
+});
+/* Persistence: keyed per deck so two decks in the same browser don't overwrite each other. */
+const QuizStore = (() => {
+  const key = 'deckQuiz::' + (document.title || location.pathname);
+  return {
+    load(){ try { return JSON.parse(localStorage.getItem(key)) || []; } catch(e){ return []; } },
+    save(a){ try { localStorage.setItem(key, JSON.stringify(a)); } catch(e){ /* memory only */ } }
+  };
+})();
+Quiz.attempts = QuizStore.load();
+/* Shuffle the choices of every question (Fisher–Yates), on load and again on every Reset.
+   Two problems this solves: authored decks drift toward putting the correct answer first, which
+   students detect fast; and a student retaking the deck can otherwise pass by remembering "it was
+   the 2nd button" instead of the physics. Shuffling on load also means the position you author is
+   irrelevant — you never have to hand-scatter the right answers.
+   Opt out with data-shuffle="off" on the .quiz-q or its quiz <section> when order carries meaning
+   (numerically ordered values, chronological steps, "all of the above"). */
+function shuffleQuizOptions(){
+  document.querySelectorAll('.quiz-q').forEach(q => {
+    if (q.closest('[data-shuffle="off"]')) return;
+    const opts = [...q.querySelectorAll('.q-opt')];
+    if (opts.length < 2) return;
+    for (let i = opts.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [opts[i], opts[j]] = [opts[j], opts[i]];
+    }
+    const parent = opts[0].parentNode;
+    const exp = q.querySelector('.q-explain');
+    const anchor = exp && exp.parentNode === parent ? exp : null;   /* keep the explanation box last */
+    opts.forEach(o => anchor ? parent.insertBefore(o, anchor) : parent.appendChild(o));
+  });
+}
+shuffleQuizOptions();
+/* Archive the round in play. Called on completion (auto) and on Reset (for a partial round). */
+function logQuizAttempt(){
+  if (!Quiz.answered || Quiz.logged) return;
+  const now = new Date();
+  Quiz.attempts.push({
+    round: Quiz.attempts.length + 1,
+    score: Quiz.score, total: Quiz.total, answered: Quiz.answered,
+    pct: Quiz.total ? Math.round(Quiz.score / Quiz.total * 100) : 0,
+    time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    date: now.toLocaleDateString()
+  });
+  Quiz.logged = true;
+  QuizStore.save(Quiz.attempts);
+}
+/* Reset every question in the deck back to unanswered — history is archived first, never cleared. */
+function resetQuiz(){
+  logQuizAttempt();
+  document.querySelectorAll('.quiz-q').forEach(q => {
+    delete q.dataset.done;
+    q.querySelectorAll('.q-opt').forEach(b => { b.disabled = false; b.classList.remove('right', 'wrong'); });
+    const exp = q.querySelector('.q-explain');
+    if (exp){ exp.classList.remove('show'); exp.innerHTML = ''; }
+  });
+  Quiz.score = 0; Quiz.answered = 0; Quiz.logged = false;
+  Object.values(Quiz.groups).forEach(g => { g.score = 0; g.answered = 0; });
+  shuffleQuizOptions();     /* new round = new choice order, so memorised positions are worthless */
+  renderQuizScores();
+}
+function renderQuizScores(){
+  /* Per-group scoreboards: <p class="quiz-score" data-quiz-group="1-1-section"> (omit attr for whole-deck total). */
+  document.querySelectorAll('.quiz-score').forEach(s => {
+    const g = s.dataset.quizGroup && Quiz.groups[s.dataset.quizGroup];
+    if (g) s.textContent = `${g.label}: ${g.score} / ${g.total}` + (g.answered < g.total ? ` (${g.total - g.answered} ${QUIZ_TEXT.unanswered})` : '');
+    else s.textContent = `${QUIZ_TEXT.score}: ${Quiz.score} / ${Quiz.total}` + (Quiz.answered < Quiz.total ? ` (${Quiz.total - Quiz.answered} ${QUIZ_TEXT.unanswered})` : '');
+  });
+  /* Breakdown table: one row per group. */
+  document.querySelectorAll('.quiz-breakdown').forEach(b => {
+    b.innerHTML = Object.values(Quiz.groups).map(g =>
+      `<div class="qb-row"><span>${g.label}</span><span>${g.score} / ${g.total}</span></div>`).join('');
+  });
+  /* Headline: combined percentage, every question weighted equally. */
+  document.querySelectorAll('.quiz-total').forEach(t => {
+    const pct = Quiz.total ? Math.round(Quiz.score / Quiz.total * 100) : 0;
+    t.textContent = `${QUIZ_TEXT.total}: ${Quiz.score} / ${Quiz.total} (${pct}%)` + (Quiz.answered < Quiz.total ? ` — ${Quiz.total - Quiz.answered} ${QUIZ_TEXT.unanswered}` : '');
+  });
+  /* Round history: one row per finished round + the round currently in play.
+     Rows are capped (data-max-rows, default 5) so a student on round 12 cannot overflow the slide. */
+  document.querySelectorAll('.quiz-attempts').forEach(box => {
+    const max = +(box.dataset.maxRows || 5);
+    const best = Quiz.attempts.reduce((m, a) => Math.max(m, a.score), -1);
+    const last = Quiz.attempts[Quiz.attempts.length - 1];
+    const today = new Date().toLocaleDateString();   /* older rounds also show their date */
+    const rows = Quiz.attempts.slice(-max).map(a => {
+      const cls = 'qa-row' + (Quiz.logged && a === last ? ' qa-now' : '')
+                           + (a.score === best && Quiz.attempts.length > 1 ? ' qa-best' : '');
+      const partial = a.answered < a.total ? ` · ${QUIZ_TEXT.partial} ${a.answered}/${a.total}` : '';
+      return `<div class="${cls}"><span>${QUIZ_TEXT.round} ${a.round}${partial}</span>` +
+             `<span class="qa-pts">${a.score} / ${a.total} (${a.pct}%)</span>` +
+             `<span class="qa-time">${QUIZ_TEXT.finished} ${a.date && a.date !== today ? a.date + ' ' : ''}${a.time}</span></div>`;
+    });
+    /* The round in play (only while unfinished — once finished it is archived above). */
+    if (!Quiz.logged){
+      const pct = Quiz.total ? Math.round(Quiz.score / Quiz.total * 100) : 0;
+      rows.push(`<div class="qa-row qa-now"><span>${QUIZ_TEXT.round} ${Quiz.attempts.length + 1}</span>` +
+                `<span class="qa-pts">${Quiz.score} / ${Quiz.total} (${pct}%)</span>` +
+                `<span class="qa-time">${QUIZ_TEXT.inProgress}</span></div>`);
+    }
+    if (Quiz.attempts.length > max)
+      rows.push(`<p class="qa-note">${QUIZ_TEXT.showing} ${max} ${QUIZ_TEXT.of} ${Quiz.attempts.length} ${QUIZ_TEXT.rounds}</p>`);
+    else if (!Quiz.attempts.length)
+      rows.push(`<p class="qa-note">${QUIZ_TEXT.noAttempts}</p>`);
+    box.innerHTML = rows.join('');
+  });
+}
+document.querySelectorAll('.quiz-q').forEach(q => {
+  const exp = q.querySelector('.q-explain');
+  q.querySelectorAll('.q-opt').forEach(opt => opt.addEventListener('click', () => {
+    if (q.dataset.done) return;
+    q.dataset.done = '1';
+    const ok = opt.hasAttribute('data-correct');
+    opt.classList.add(ok ? 'right' : 'wrong');
+    q.querySelectorAll('.q-opt[data-correct]').forEach(c => c.classList.add('right'));
+    q.querySelectorAll('.q-opt').forEach(b => b.disabled = true);
+    if (exp){
+      exp.innerHTML = opt.getAttribute('data-explain') || '';
+      exp.classList.add('show');
+      if (window.renderMathInElement) renderMathInElement(exp, KATEX_OPTS);
+    }
+    Quiz.answered++; if (ok) Quiz.score++;
+    const g = Quiz.groups[q.dataset.group];
+    if (g){ g.answered++; if (ok) g.score++; }
+    /* Last question of the deck answered → the round is finished; stamp it with the clock time. */
+    if (Quiz.answered >= Quiz.total) logQuizAttempt();
+    renderQuizScores();
+  }));
+});
+/* Reset control on the overall-score slide. Non-destructive: the round in play is archived first,
+   so a mis-click costs nothing and no confirm dialog is needed (dialogs stall a live classroom). */
+document.querySelectorAll('.quiz-reset').forEach(b => b.addEventListener('click', resetQuiz));
+renderQuizScores();
+
+/* ================= Reveal blocks (Socratic click-to-show) ================= */
+document.querySelectorAll('.reveal-btn').forEach(b =>
+  b.addEventListener('click', () => b.closest('.reveal').classList.add('open')));
+
+/* ================= Helpers for simulations ================= */
+function bindSlider(id, fn){
+  const s = el(id);
+  const h = () => fn(+s.value);
+  s.addEventListener('input', h); h();
+  return s;
+}
+
+/* ================= LIVE POLL (phone voting) =====================================
+   Students scan the QR on the "Join the live poll" slide once, keep that page open for the
+   whole class, and vote from their phone. Results appear on the projected deck instantly.
+
+   Transport is MQTT over WebSocket through a PUBLIC broker, so the deck stays a single file
+   with no server of our own — the thing that makes it survivable is the failover: three
+   brokers are tried in turn, the connection auto-reconnects, and if none of them work the
+   deck silently falls back to "tap the bar on screen" hand-counting. A class must never stall
+   because a broker was blocked by campus wifi.
+
+   Privacy: no names, no identifiers a human could trace — only an anonymous random device id
+   and a choice index (0-3) ever leave the phone. Say so on the join slide; students ask.
+
+   Translate POLL_TEXT below for a Thai deck (Thai values are given in the comments). */
+const POLL_TEXT = {
+  /* connection status, shown next to a coloured dot */
+  off:'not connected',            /* 'ยังไม่เชื่อมต่อ' */
+  connecting:'connecting…',       /* 'กำลังเชื่อมต่อ…' */
+  on:'ready for votes',           /* 'พร้อมรับโหวต' */
+  lost:'dropped — reconnecting',  /* 'หลุด — กำลังต่อใหม่' */
+  fail:'broker unreachable — use tap-on-screen mode',   /* 'ต่อ broker ไม่ได้ — ใช้โหมดแตะบนจอ' */
+  nolib:'mqtt.js failed to load — use tap-on-screen mode', /* 'โหลด mqtt.js ไม่ได้ — ใช้โหมดแตะบนจอ' */
+  joined:'joined',                /* 'เข้าร่วมแล้ว' */
+  devices:'devices',              /* 'เครื่อง' */
+  /* phone voter page */
+  question:'Question',            /* 'คำถาม' */
+  closed:'voting closed',         /* 'ปิดโหวตแล้ว' */
+  waiting:'Connected. Waiting for the next question…',  /* 'เชื่อมต่อแล้ว รอคำถามจากอาจารย์…' */
+  keepOpen:'Keep this page open all class — no need to scan again.', /* 'เปิดหน้านี้ค้างไว้ได้ตลอดคาบ ไม่ต้องสแกนซ้ำ' */
+  sent:'Answer sent:',            /* 'ส่งคำตอบแล้ว:' */
+  canChange:'— you may change your mind until time runs out', /* '— เปลี่ยนใจได้จนกว่าจะหมดเวลา' */
+  timeUp:'Time is up for this question. Wait for the next one.', /* 'หมดเวลาข้อนี้แล้ว รอข้อถัดไปได้เลย' */
+  tapChoice:'Tap the choice you think is right.', /* 'แตะตัวเลือกที่คุณคิดว่าถูก' */
+  /* presenter side */
+  stop:'Stop',                    /* 'หยุด' */
+  answered:'answered',            /* 'ตอบแล้ว' */
+  people:'people answered',       /* 'ตอบแล้ว … คน' — see renderPoll for the sentence */
+  correctIs:'is correct',         /* 'ถูกต้อง' */
+  qrFailed:'could not draw the QR code',            /* 'สร้าง QR ไม่ได้' */
+  fileMode:'This file is open as <b>file://</b><br>so phones cannot reach it.', /* 'ตอนนี้เปิดไฟล์แบบ file:// มือถือจึงเข้าไม่ได้' */
+  fileHint:'Publish it (GitHub Pages) and the QR appears automatically.', /* 'อัปโหลดขึ้น GitHub Pages ก่อน แล้ว QR จะขึ้นเอง' */
+  fallback:'Fallback: tap the result bars on screen to count hands.' /* 'โหมดสำรอง: แตะที่แถบผลโหวตบนจอเพื่อนับมือ' */
+};
+
+(function(){
+  /* PREFIX namespaces this deck's topics on the shared public broker — set it to the course
+     code so two courses running at the same time never see each other's votes. */
+  const PREFIX  = 'deckpoll';
+  const BROKERS = ['wss://broker.emqx.io:8084/mqtt',
+                   'wss://broker.hivemq.com:8884/mqtt',
+                   'wss://test.mosquitto.org:8081/mqtt'];
+  const ABC = ['A','B','C','D','E','F'];
+  const A32 = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';   /* no 0/O/1/I — room codes get read aloud */
+  const rid = n => Array.from({length:n}, () => A32[Math.floor(Math.random()*A32.length)]).join('');
+  const LS = {
+    get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+    set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  };
+  const ready = fn => document.readyState === 'loading'
+        ? document.addEventListener('DOMContentLoaded', fn) : fn();
+  const params = new URLSearchParams(location.search);
+  const VOTER  = params.has('poll');
+  let ROOM = (VOTER ? (params.get('poll')||'') : (LS.get('deckPollRoom')||'')).toUpperCase();
+  if (!ROOM){ ROOM = rid(4); LS.set('deckPollRoom', ROOM); }
+
+  /* ---------- transport: MQTT/WSS with broker failover + auto-reconnect ---------- */
+  const Net = (() => {
+    let client = null, status = 'off', topics = [], handler = () => {}, ready = null, statusCb = () => {};
+    const base = () => PREFIX + '/' + ROOM;
+    function set(s){ status = s; statusCb(s); }
+    function dial(i){
+      if (i >= BROKERS.length){ set('fail'); setTimeout(() => dial(0), 9000); return; }
+      set('connecting');
+      let settled = false, c;
+      try{
+        c = mqtt.connect(BROKERS[i], { clientId:'d'+rid(6)+Date.now().toString(36),
+              reconnectPeriod:0, connectTimeout:6000, clean:true, keepalive:30 });
+      }catch(e){ return dial(i+1); }
+      const next = () => { if (settled) return; settled = true; clearTimeout(to);
+                           try{ c.end(true); }catch(e){} dial(i+1); };
+      const to = setTimeout(next, 7500);
+      c.on('connect', () => {
+        if (settled) return; settled = true; clearTimeout(to); client = c;
+        c.subscribe(topics.map(t => base()+'/'+t), {qos:0});
+        set('on'); if (ready) ready();
+      });
+      c.on('error', next);
+      c.on('close', () => {
+        if (!settled){ next(); return; }
+        if (client === c){ client = null; set('lost'); setTimeout(() => dial(0), 4000); }
+      });
+      c.on('message', (t, p) => { try{ handler(t.slice(base().length+1), JSON.parse(p.toString())); }catch(e){} });
+    }
+    return {
+      start(t, h, onReady){ topics = t; handler = h; ready = onReady;
+        if (!window.mqtt){ set('nolib'); return; } dial(0); },
+      pub(t, o, retain){ if (!client) return false;
+        try{ client.publish(base()+'/'+t, JSON.stringify(o), {qos:0, retain:!!retain}); return true; }catch(e){ return false; } },
+      restart(){ try{ if (client) client.end(true); }catch(e){} client = null; dial(0); },
+      onStatus(f){ statusCb = f; f(status); },
+      get status(){ return status; }, get live(){ return !!client; }
+    };
+  })();
+  const stat = s => POLL_TEXT[s] || s;
+
+  /* ======================================================================
+     A. PHONE VOTER  —  the same file opened as  ...index.html?poll=ROOM
+     The <html class="voter-mode"> switch in <head> hides the deck before first paint,
+     so a phone never flashes a 1280x720 stage it cannot use.
+     ====================================================================== */
+  if (VOTER){
+    let vid = LS.get('deckVoterId'); if (!vid){ vid = rid(10); LS.set('deckVoterId', vid); }
+    const body = document.getElementById('vBody');
+    document.getElementById('vRoom').textContent = ROOM;
+    let cur = null, mine = null;
+
+    Net.onStatus(s => {
+      const e = document.getElementById('vStat');
+      if (e) e.innerHTML = '<span class="netdot ' + s + '"></span>' + stat(s);
+    });
+    ready(() => Net.start(['state'], (t, m) => {
+      if (t !== 'state' || !m) return;
+      /* remember this phone's answer per question, so a reload mid-question is not a lost vote */
+      if (!cur || cur.qid !== m.qid){ const v = LS.get('vote:'+ROOM+':'+m.qid); mine = v === null ? null : +v; }
+      cur = m; render();
+    }, () => Net.pub('hello', {vid})));
+    setInterval(() => { if (Net.live) Net.pub('hb', {vid}); }, 30000);
+
+    function vote(i){
+      if (!cur || !cur.open) return;
+      mine = i; LS.set('vote:'+ROOM+':'+cur.qid, String(i));
+      Net.pub('vote', {qid:cur.qid, i, vid});
+      render();
+    }
+    function render(){
+      if (!cur){
+        body.innerHTML = '<div class="v-card"><div class="v-wait"><div class="big">&#128246;</div>' +
+          POLL_TEXT.waiting + '<br><span style="font-size:14.5px">' + POLL_TEXT.keepOpen + '</span></div></div>';
+        return;
+      }
+      const closed = !cur.open;
+      body.innerHTML =
+        '<div class="v-card">' +
+          '<p class="v-lbl">' + esc(cur.label || POLL_TEXT.question) + (closed ? ' &middot; ' + POLL_TEXT.closed : '') + '</p>' +
+          '<p class="v-q">' + esc(cur.qtext || '') + '</p>' +
+          cur.choices.map((c,i) =>
+            '<button class="v-opt' + (mine===i ? ' mine' : '') + '" data-i="' + i + '"' + (closed?' disabled':'') + '>' +
+            '<span class="k">' + ABC[i] + '</span><span>' + esc(c) + '</span></button>').join('') +
+          (mine !== null
+            ? '<div class="v-ok">&#10003; ' + POLL_TEXT.sent + ' ' + ABC[mine] + (closed ? '' : ' ' + POLL_TEXT.canChange) + '</div>'
+            : (closed ? '<p class="v-note">' + POLL_TEXT.timeUp + '</p>'
+                      : '<p class="v-note">' + POLL_TEXT.tapChoice + '</p>')) +
+        '</div>';
+      body.querySelectorAll('.v-opt').forEach(b => b.onclick = () => vote(+b.dataset.i));
+    }
+    function esc(s){ return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+    render();
+    return;                              /* phone mode ends here — the deck engine is never touched */
+  }
+
+  /* ======================================================================
+     B. PRESENTER  —  the deck projected in the room
+     ====================================================================== */
+  const Poll = { snap:{}, votes:{}, manual:{}, people:new Set(), open:null };
+
+  /* A question is authored ONCE, in the .quiz-q markup. The poll reads it from there, so the
+     phone, the result bars and the quiz slide can never drift out of sync. */
+  function snapshot(qid){
+    const q = document.querySelector('.quiz-q[data-qid="' + qid + '"]');
+    if (!q) return null;
+    const sec  = q.closest('.slide');
+    const opts = [...q.querySelectorAll('.q-opt')];
+    const ci   = opts.findIndex(o => o.hasAttribute('data-correct'));
+    return { qid, label:(sec && sec.dataset.title) || POLL_TEXT.question,
+             qtext:q.querySelector('.q-text').textContent.trim(),          /* plain — sent to phones */
+             qhtml:q.querySelector('.q-text').innerHTML,                   /* rich — shown on the projector */
+             choices:opts.map(o => o.textContent.trim()),
+             choiceHtml:opts.map(o => o.innerHTML),
+             correct:ci, exp: ci >= 0 ? (opts[ci].getAttribute('data-explain') || '') : '' };
+  }
+  const sigOf = s => s ? s.qtext + '¦' + s.choices.join('¦') : '';
+  /* Cached, because a snapshot is the single source of truth for a question once voting starts.
+     But two things legitimately change the wording before that: KaTeX renders the equations a
+     moment after load, and Reset re-shuffles the choices. So refresh the cache while the question
+     is still untouched — otherwise phones would show raw "$-r_A$" or an order the screen no longer
+     has. Once a single vote exists the snapshot is frozen, or the tally would point at the wrong bar. */
+  function snapOf(qid){
+    const s = Poll.snap[qid];
+    if (!s) return (Poll.snap[qid] = snapshot(qid));
+    const untouched = Poll.open !== qid
+      && !Object.keys(Poll.votes[qid] || {}).length
+      && !(Poll.manual[qid] || []).some(n => n);
+    if (untouched){
+      const fresh = snapshot(qid);
+      if (fresh && sigOf(fresh) !== sigOf(s)) return (Poll.snap[qid] = fresh);
+    }
+    return s;
+  }
+  function tally(qid){
+    const s = snapOf(qid); if (!s) return [];
+    const c = s.choices.map(() => 0);
+    Object.values(Poll.votes[qid] || {}).forEach(i => { if (i >= 0 && i < c.length) c[i]++; });
+    (Poll.manual[qid] || []).forEach((n, i) => { if (i < c.length) c[i] += n; });   /* hand counts */
+    return c;
+  }
+  const total = qid => tally(qid).reduce((a, b) => a + b, 0);
+
+  function publishState(open){
+    const qid = Poll.open; if (!qid) return;
+    const s = snapOf(qid); if (!s) return;
+    /* retained, so a phone that joins late still gets the question that is live right now */
+    Net.pub('state', {qid, label:s.label, qtext:s.qtext, choices:s.choices, open:!!open, t:Date.now()}, true);
+  }
+  function openPoll(qid){
+    if (!snapOf(qid)) return;
+    Poll.open = qid;
+    Poll.votes[qid]  = Poll.votes[qid]  || {};
+    Poll.manual[qid] = Poll.manual[qid] || snapOf(qid).choices.map(() => 0);
+    publishState(true); paint();
+  }
+  function closePoll(){ if (!Poll.open) return; publishState(false); Poll.open = null; paint(); }
+
+  let lastEcho = 0;
+  ready(() => Net.start(['vote','hello','hb'], (t, m) => {
+    if (!m) return;
+    if (t === 'vote' && m.qid && m.vid != null){
+      /* keyed by device id, so a student who changes their mind replaces their vote, not adds one */
+      (Poll.votes[m.qid] = Poll.votes[m.qid] || {})[m.vid] = m.i;
+      Poll.people.add(m.vid); paint();
+    } else if (t === 'hello' || t === 'hb'){
+      if (m.vid) Poll.people.add(m.vid);
+      if (t === 'hello' && Poll.open && Date.now() - lastEcho > 2500){ lastEcho = Date.now(); publishState(true); }
+      paint();
+    }
+  }, () => { if (Poll.open) publishState(true); }));
+
+  /* ---------- countdown dial, injected into the header of every quiz slide ----------
+     It lives inside .s-head on purpose: the header is outside the ~470px content zone, so the
+     dial can never collide with the question, however long the question is. */
+  const R = 32, C = 2 * Math.PI * R;
+  const DURATIONS = [30, 60, 90];            /* seconds offered; DURATIONS[0] is pre-selected */
+  let run = null;                            /* {w, sec, qid, dur, end, iv} */
+
+  function buildTimer(qid){
+    const w = document.createElement('div');
+    w.className = 'qtimer'; w.dataset.qid = qid; w.dataset.dur = String(DURATIONS[0]);
+    w.innerHTML =
+      '<div class="qt-dial"><svg viewBox="0 0 74 74">' +
+        '<circle class="tk" cx="37" cy="37" r="' + R + '"></circle>' +
+        '<circle class="tp" cx="37" cy="37" r="' + R + '" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="0"></circle>' +
+      '</svg><span class="qt-num">' + DURATIONS[0] + '</span></div>' +
+      '<div class="qt-ctl"><div class="qt-sel">' +
+        DURATIONS.map((d, i) => '<button data-s="' + d + '"' + (i ? '' : ' class="on"') + '>' + d + 's</button>').join('') +
+      '</div><button class="qt-start">&#9654; Start</button></div>' +
+      '<div class="qt-live"><b>0</b><span class="netdot"></span>' + POLL_TEXT.answered + '</div>';
+    w.querySelectorAll('.qt-sel button').forEach(b => b.onclick = () => {
+      if (run && run.w === w) return;                 /* don't change duration mid-count */
+      w.dataset.dur = b.dataset.s;
+      w.querySelectorAll('.qt-sel button').forEach(x => x.classList.toggle('on', x === b));
+      setDial(w, +b.dataset.s, +b.dataset.s);
+    });
+    w.querySelector('.qt-start').onclick = () => (run && run.w === w) ? stopTimer(false) : startTimer(w);
+    return w;
+  }
+  function setDial(w, left, dur){
+    w.querySelector('.qt-num').textContent = Math.ceil(left);
+    w.querySelector('.tp').style.strokeDashoffset = (C * (1 - Math.max(0, left) / dur)).toFixed(1);
+    w.classList.toggle('warn', left <= 10 && left > 5);
+    w.classList.toggle('crit', left <= 5);
+  }
+  function startTimer(w){
+    stopTimer(false);
+    const dur = +w.dataset.dur, sec = w.closest('.slide');
+    run = { w, sec, qid:w.dataset.qid, dur, end:Date.now() + dur*1000 };
+    w.querySelector('.qt-start').innerHTML = '&#9632; ' + POLL_TEXT.stop;
+    w.querySelector('.qt-start').classList.add('run');
+    openPoll(w.dataset.qid);                 /* starting the clock is what opens voting */
+    setDial(w, dur, dur);
+    run.iv = setInterval(() => {
+      const left = (run.end - Date.now()) / 1000;
+      setDial(w, Math.max(0, left), dur);
+      if (!sec.classList.contains('active')){ stopTimer(false); return; }
+      if (left <= 0){
+        const i = Deck.current;
+        stopTimer(true); closePoll();
+        Deck.goTo(i + 1);                    /* time up -> straight to this question's result slide */
+      }
+    }, 100);
+  }
+  function stopTimer(finished){
+    if (!run) return;
+    clearInterval(run.iv);
+    const w = run.w, dur = +w.dataset.dur;
+    w.querySelector('.qt-start').innerHTML = '&#9654; Start';
+    w.querySelector('.qt-start').classList.remove('run');
+    setDial(w, finished ? 0 : dur, dur);
+    if (!finished) w.classList.remove('warn','crit');
+    run = null;
+  }
+
+  /* Every slide that holds a question gets a dial — no per-slide markup to remember. */
+  document.querySelectorAll('.slide').forEach(sec => {
+    const q = sec.querySelector('.quiz-q'); if (!q || !q.dataset.qid) return;
+    const head = sec.querySelector('.s-head'); if (!head) return;
+    const txt = document.createElement('div'); txt.className = 'sh-txt';
+    while (head.firstChild) txt.appendChild(head.firstChild);
+    head.appendChild(txt);
+    head.appendChild(buildTimer(q.dataset.qid));
+    head.classList.add('with-timer');
+  });
+
+  /* ---------- result slide: animated percentage bars ---------- */
+  function renderPoll(sec, animate){
+    const qid = sec.dataset.pollFor, s = snapOf(qid); if (!s) return;
+    const bars = sec.querySelector('.poll-bars');
+    const sig  = sigOf(s);
+    if (bars.dataset.sig !== sig){            /* rebuild only when the wording changed (KaTeX, reshuffle) */
+      bars.dataset.sig = sig;
+      bars.innerHTML = s.choices.map((c, i) =>
+        '<div class="pbar' + (i === s.correct ? ' ok' : '') + '" data-i="' + i + '">' +
+          '<div class="pb-text"><span class="pb-key">' + ABC[i] + '</span>' + (s.choiceHtml ? s.choiceHtml[i] : c) + '</div>' +
+          '<div class="pb-num"><b>0%</b><span>0</span></div>' +
+          '<div class="pb-track"><div class="pb-fill"></div></div>' +
+        '</div>').join('');
+      bars.querySelectorAll('.pbar').forEach(b => b.onclick = () => {   /* tap = +1 hand count */
+        Poll.manual[qid] = Poll.manual[qid] || s.choices.map(() => 0);
+        Poll.manual[qid][+b.dataset.i]++; paint();
+      });
+      sec.querySelector('.poll-qtext').innerHTML = s.qhtml || s.qtext;
+      const ex = sec.querySelector('.poll-exp');
+      if (ex){
+        ex.innerHTML = '<b>' + ABC[s.correct] + ' ' + POLL_TEXT.correctIs + '</b> &mdash; ' + s.exp;
+        /* the explanation is authored inside data-explain, so its math is still unrendered here */
+        if (window.renderMathInElement) renderMathInElement(ex, KATEX_OPTS);
+      }
+    }
+    if (animate) bars.querySelectorAll('.pb-fill').forEach(f => f.style.width = '0%');
+    updateBars(sec, animate);
+  }
+  function updateBars(sec, animate){
+    const qid = sec.dataset.pollFor, s = snapOf(qid); if (!s) return;
+    const t = tally(qid), n = t.reduce((a, b) => a + b, 0), mx = Math.max(...t, 0);
+    sec.querySelectorAll('.pbar').forEach(b => {
+      const i = +b.dataset.i, pct = n ? Math.round(t[i] / n * 100) : 0;
+      b.querySelector('.pb-num b').textContent = pct + '%';
+      b.querySelector('.pb-num span').textContent = t[i];
+      b.classList.toggle('lead', n > 0 && t[i] === mx);
+      /* a 0-width -> real-width change one tick later is what makes the bar animate on entry */
+      const set = () => b.querySelector('.pb-fill').style.width = (n ? Math.max(pct, t[i] ? 1.5 : 0) : 0) + '%';
+      animate ? setTimeout(set, 60) : set();
+    });
+    const h = sec.querySelector('.poll-n');
+    if (h) h.textContent = n + ' ' + POLL_TEXT.people;
+  }
+
+  /* ---------- repaint everything that shows live numbers ---------- */
+  function paint(){
+    document.querySelectorAll('.qtimer').forEach(w => {
+      w.querySelector('.qt-live b').textContent = total(w.dataset.qid);
+      w.querySelector('.qt-live .netdot').className = 'netdot ' + Net.status;
+    });
+    const a = document.querySelector('.slide.active');
+    if (a && a.dataset.pollFor) updateBars(a, false);
+    const st = document.getElementById('joinStat');
+    if (st) st.innerHTML = '<span class="netdot ' + Net.status + '"></span>' + stat(Net.status) +
+                           ' &middot; ' + POLL_TEXT.joined + ' <b>' + Poll.people.size + '</b> ' + POLL_TEXT.devices;
+  }
+  Net.onStatus(paint);
+
+  /* ---------- react to slide changes ---------- */
+  let curSec = null;
+  function onSlide(){
+    const a = document.querySelector('.slide.active');
+    if (a === curSec) return;
+    curSec = a; if (!a) return;
+    if (run && run.sec !== a) stopTimer(false);
+    const w = a.querySelector('.qtimer');
+    if (w && !(run && run.w === w)){ w.classList.remove('warn','crit'); setDial(w, +w.dataset.dur, +w.dataset.dur); }
+    if (a.dataset.pollFor){
+      a.classList.remove('revealed');
+      renderPoll(a, true);
+      const ex = a.querySelector('.poll-exp'); if (ex) ex.classList.remove('show');
+    }
+    if (a.id === 'sl-join') drawQR();
+    /* leaving a question without going to its result slide closes voting, so a stale question
+       never sits open on 60 phones while the class has moved on */
+    if (Poll.open && a.dataset.pollFor !== Poll.open
+        && !a.querySelector('.quiz-q[data-qid="' + Poll.open + '"]')) closePoll();
+    paint();
+  }
+  new MutationObserver(onSlide).observe(document.getElementById('stage'),
+    {subtree:true, attributes:true, attributeFilter:['class']});
+  onSlide();
+
+  /* ---------- result-slide tools + keyboard ---------- */
+  document.querySelectorAll('.poll-slide').forEach(sec => {
+    const qid = sec.dataset.pollFor;
+    const rev = sec.querySelector('.pt-reveal'), reo = sec.querySelector('.pt-reopen'), clr = sec.querySelector('.pt-clear');
+    if (rev) rev.onclick = () => {
+      sec.classList.toggle('revealed');
+      const ex = sec.querySelector('.poll-exp');
+      if (ex) ex.classList.toggle('show', sec.classList.contains('revealed'));
+    };
+    if (reo) reo.onclick = () => { openPoll(qid); renderPoll(sec, false); };
+    if (clr) clr.onclick = () => {
+      Poll.votes[qid] = {}; Poll.manual[qid] = snapOf(qid).choices.map(() => 0);
+      renderPoll(sec, true);
+    };
+  });
+  addEventListener('keydown', e => {
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    const a = document.querySelector('.slide.active'); if (!a) return;
+    const k = e.key.toLowerCase();
+    if (k === 's'){ const w = a.querySelector('.qtimer'); if (w){ e.preventDefault(); (run && run.w === w) ? stopTimer(false) : startTimer(w); } }
+    else if (k === 'a' && a.classList.contains('poll-slide')){ const r = a.querySelector('.pt-reveal'); if (r){ e.preventDefault(); r.click(); } }
+  });
+
+  /* ---------- join slide: QR + room code ---------- */
+  function voteURL(){ return location.origin + location.pathname + '?poll=' + ROOM; }
+  function drawQR(){
+    const box = document.getElementById('joinQR'), u = document.getElementById('joinURL');
+    const rc = document.getElementById('joinRoom'); if (rc) rc.textContent = ROOM;
+    if (!box) return;
+    if (location.protocol === 'file:'){
+      /* A QR pointing at file:///... is useless on a phone. Say so plainly instead of drawing
+         a code that silently fails in front of the class. */
+      box.innerHTML = '<div style="padding:52px 14px;font-size:16px;line-height:1.55;color:var(--red)">' +
+        POLL_TEXT.fileMode + '<br><span style="color:var(--muted);font-size:14.5px">' + POLL_TEXT.fileHint + '</span></div>';
+      if (u) u.textContent = POLL_TEXT.fallback;
+      return;
+    }
+    try{
+      const q = qrcode(0, 'M'); q.addData(voteURL()); q.make();
+      box.innerHTML = q.createSvgTag({cellSize:6, margin:1, scalable:true});
+      if (u) u.textContent = voteURL();
+    }catch(e){ box.textContent = POLL_TEXT.qrFailed; if (u) u.textContent = voteURL(); }
+  }
+  const nr = document.getElementById('joinNew');
+  if (nr) nr.onclick = () => {                 /* new room code = a clean slate for the next class */
+    ROOM = rid(4); LS.set('deckPollRoom', ROOM);
+    Poll.people.clear(); drawQR(); Net.restart(); paint();
+  };
+  ready(drawQR);
+  paint();
+})();
+
+/* ================= Casework brief interactives ================= */
+(() => {
+  const $ = id => document.getElementById(id);
+  const sup = n => String(n).replace(/-/g,'⁻').replace(/[0-9]/g, d => '⁰¹²³⁴⁵⁶⁷⁸⁹'[d]);
+  const sci = x => { if (!isFinite(x) || x === 0) return '0'; const e = Math.floor(Math.log10(x)); const m = x / Math.pow(10, e); return m.toFixed(1) + '×' + '10' + sup(e); };
+
+  /* ---- countdown ---- */
+  if ($('cdDays')) {
+    const dl = new Date('2026-11-22T23:59:00+07:00').getTime();
+    const tick = () => {
+      let s = Math.floor((dl - Date.now()) / 1000);
+      if (s <= 0) { $('cdDays').textContent = 'Deadline passed'; $('cdHms').innerHTML = '&nbsp;'; $('cdNote').textContent = 'Sun 22 Nov 2026, 23:59'; return; }
+      const d = Math.floor(s / 86400); s -= d * 86400;
+      const h = Math.floor(s / 3600); s -= h * 3600; const m = Math.floor(s / 60); s -= m * 60;
+      $('cdDays').textContent = d + (d === 1 ? ' day' : ' days');
+      $('cdHms').textContent = String(h).padStart(2,'0') + ' h ' + String(m).padStart(2,'0') + ' min ' + String(s).padStart(2,'0') + ' s';
+      $('cdNote').textContent = 'until Sun 22 Nov 2026, 23:59';
+    };
+    tick(); setInterval(tick, 1000);
+  }
+
+  /* ---- six moves ---- */
+  if ($('stepList')) {
+    const ST = [
+      ['Understand the OTS', 'Open your OTS at apinans.github.io/CUChemEOTS and run TE5 once. Watch the plant. Note the controlled variables, manipulated variables and safety equipment.', 'Output: your own list of loops and protections'],
+      ['Explain process and P&ID', 'Trace feed to product on the P&ID. Say what each main item does and how each loop works.', 'Output: the process section of the slides'],
+      ['HAZOP, one guide word', 'Define the reactor node and its intent. Derive the deviation, causes, consequences and safeguards.', 'Output: the HAZOP section of the slides'],
+      ['Solve TE5 with the workbook', 'Work Stages 0 to 6 in the workbook. Keep OTS trend screenshots as evidence.', 'Output: workbook record and the problem-solving section'],
+      ['Build the presentation file', 'Join the three sections, fit 20 minutes, and move full tables to an appendix.', 'Output: one .pptx file'],
+      ['Present and defend', 'Rehearse with a timer. Upload to MyCV by Sun 22 Nov, 23:59. Prepare for 10 minutes of questions.', 'Output: submitted file and a ready team']
+    ];
+    const box = $('stepList');
+    const sel = i => {
+      [...box.children].forEach((b, j) => b.classList.toggle('on', j === i));
+      $('stepNo').textContent = 'STEP ' + (i + 1); $('stepTitle').textContent = ST[i][0];
+      $('stepBody').textContent = ST[i][1]; $('stepOut').textContent = ST[i][2];
+    };
+    ST.forEach((s, i) => { const b = document.createElement('button'); b.className = 'stepbtn'; b.textContent = (i + 1) + ' · ' + s[0]; b.addEventListener('click', () => sel(i)); box.appendChild(b); });
+    sel(0);
+  }
+
+  /* ---- clickable P&ID ---- */
+  if ($('pid')) {
+    const INFO = {
+      reactor: ['Reactor R-100', 'Where the reaction happens. The agitator mixes the contents and moves heat to the wall.', 'What are its design temperature and pressure?'],
+      jacket: ['Jacket', 'Coolant flows here and removes reaction heat through the wall (the $UA$ term).', 'What happens if coolant flow or temperature changes?'],
+      fv: ['Feed control valve', 'Final element of the feed loop. Its opening is the manipulated variable.', 'Does it fail open or closed, and is that the safe direction?'],
+      fic: ['FIC, flow controller', 'Compares measured feed flow with the setpoint and moves the feed valve.', 'What is the controlled variable here?'],
+      tv: ['Coolant control valve', 'Final element of the temperature loop. More opening means more heat removed.', 'What is its fail position?'],
+      tic: ['TIC and its sensor', 'Reads the temperature inside the reactor and moves the coolant valve. CV = reactor temperature, MV = coolant flow.', 'What happens to this loop if the sensor reads low?'],
+      psv: ['PSV, relief valve', 'Last-resort protection. It opens at its set pressure and sends the release to a safe place.', 'What is the set pressure, and where does the release go?']
+    };
+    const show = k => {
+      document.querySelectorAll('#pid .hot').forEach(g => g.classList.toggle('sel', g.dataset.k === k));
+      const i = INFO[k]; $('pidName').textContent = i[0]; $('pidRole').textContent = i[1].replace(/\$UA\$/, 'UA'); $('pidAsk').textContent = 'Ask: ' + i[2];
+    };
+    document.querySelectorAll('#pid .hot').forEach(g => g.addEventListener('click', () => show(g.dataset.k)));
+    show('reactor');
+  }
+
+  /* ---- control loop ---- */
+  if ($('kc')) {
+    const run = () => {
+      const Kc = +$('kc').value, d = +$('dist').value, pi = $('pi').checked;
+      $('kcVal').textContent = Kc.toFixed(1); $('dVal').textContent = '+' + d + ' K';
+      let y = 0, I = 0, peak = 0; const pts = [];
+      for (let t = 0; t <= 400; t++) {
+        const dd = t >= 40 ? d : 0;
+        const u = Kc * y + (pi ? Kc / 80 * I : 0);
+        y += (-y - u + dd) / 60; I += y;
+        peak = Math.max(peak, y);
+        pts.push((50 + t / 400 * 490).toFixed(1) + ',' + (250 - Math.min(Math.max(y, 0), 22) / 22 * 236).toFixed(1));
+      }
+      $('loopCurve').setAttribute('points', pts.join(' '));
+      $('loopOut').textContent = 'Peak ' + peak.toFixed(1) + ' K · final offset ' + y.toFixed(1) + ' K';
+    };
+    ['kc', 'dist', 'pi'].forEach(id => $(id).addEventListener('input', run)); run();
+  }
+
+  /* ---- heat generated vs removed ---- */
+  if ($('cFac')) {
+    const Ea = 80000, R = 8.314, T0 = 350, G = 70;
+    const X = T => 50 + (T - 320) / 80 * 490, Y = q => 250 - Math.min(Math.max(q, 0), 200) / 200 * 236;
+    const svg = $('genCurve').ownerSVGElement;
+    [50, 70, 90, 110].forEach(c => { const t = document.createElementNS('http://www.w3.org/2000/svg', 'text'); t.setAttribute('x', X(c + 273.15)); t.setAttribute('y', 268); t.setAttribute('font-size', 14); t.setAttribute('fill', '#6B7280'); t.setAttribute('text-anchor', 'middle'); t.textContent = c; svg.appendChild(t); });
+    $('limLine').setAttribute('x1', X(343.15)); $('limLine').setAttribute('x2', X(343.15)); $('limTxt').setAttribute('x', X(343.15) + 6);
+    const run = () => {
+      const c = +$('cFac').value, UA = +$('uaS').value, Tc = +$('tcS').value;
+      $('cVal').textContent = '×' + c.toFixed(2); $('uaVal').textContent = UA.toFixed(2) + ' kW/K'; $('tcVal').textContent = (Tc - 273.15).toFixed(0) + ' °C';
+      const gen = T => G * c * Math.exp(-Ea / R * (1 / T - 1 / T0)), rem = T => UA * (T - Tc);
+      const gp = [], rp = [];
+      for (let T = 320; T <= 400; T += 1) { if (gen(T) <= 200) gp.push(X(T).toFixed(1) + ',' + Y(gen(T)).toFixed(1)); if (T >= Tc && rem(T) <= 200) rp.push(X(T).toFixed(1) + ',' + Y(rem(T)).toFixed(1)); }
+      $('genCurve').setAttribute('points', gp.join(' ')); $('remLine').setAttribute('points', rp.join(' '));
+      let st = null, prev = null;
+      for (let T = Tc + 0.05; T < 400; T += 0.05) { const d = gen(T) - rem(T); if (prev !== null && prev > 0 && d <= 0) { st = T; break; } prev = d; }
+      const out = $('semOut'), dot = $('opDot');
+      if (st === null) { dot.setAttribute('cx', -50); out.style.color = 'var(--red)'; out.textContent = 'No stable point: thermal runaway'; }
+      else {
+        dot.setAttribute('cx', X(st)); dot.setAttribute('cy', Y(gen(st)));
+        const C = st - 273.15; out.style.color = C > 70 ? 'var(--orange)' : 'var(--green)';
+        out.textContent = 'Stable at ' + C.toFixed(1) + ' °C' + (C > 70 ? ' (above limit)' : '');
+      }
+    };
+    ['cFac', 'uaS', 'tcS'].forEach(id => $(id).addEventListener('input', run)); run();
+  }
+
+  /* ---- LOPA ---- */
+  if ($('lf')) {
+    const run = () => {
+      const fx = +$('lf').value, tx = +$('lt').value;
+      const f = Math.pow(10, fx), tgt = Math.pow(10, tx);
+      $('lfVal').textContent = sci(f) + ' /yr'; $('ltVal').textContent = sci(tgt) + ' /yr';
+      let pfd = 1; [['ip1', .1], ['ip2', .01], ['ip3', .01]].forEach(([id, p]) => { if ($(id).checked) pfd *= p; });
+      const m = f * pfd; $('lopaF').textContent = sci(m) + ' /yr';
+      if (m <= tgt * 1.0000001) { $('lopaStat').style.color = 'var(--green)'; $('lopaStat').textContent = 'Meets the target'; $('lopaGap').textContent = 'Margin: ×' + (tgt / m).toFixed(0); }
+      else { $('lopaStat').style.color = 'var(--red)'; $('lopaStat').textContent = 'Gap to target'; $('lopaGap').textContent = 'Needs ×' + Math.ceil(m / tgt) + ' more risk reduction (recommendation)'; }
+    };
+    ['lf', 'lt', 'ip1', 'ip2', 'ip3'].forEach(id => $(id).addEventListener('input', run)); run();
+  }
+
+  /* ---- checklists ---- */
+  document.querySelectorAll('.chk').forEach(box => {
+    const key = 'c2105625:' + box.dataset.key, cbs = [...box.querySelectorAll('input')];
+    let saved = []; try { saved = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+    const bar = box.parentElement.querySelector('.chkbar>span'), pct = box.parentElement.querySelector('.chkpct');
+    const upd = () => { const n = cbs.filter(c => c.checked).length; bar.style.width = (n / cbs.length * 100) + '%'; pct.textContent = n + ' of ' + cbs.length + ' ready';
+      try { localStorage.setItem(key, JSON.stringify(cbs.map(c => c.checked))); } catch (e) {} };
+    cbs.forEach((c, i) => { c.checked = !!saved[i]; c.addEventListener('change', upd); }); upd();
+  });
+
+  /* ---- S/D/N hypothesis table ---- */
+  if (document.querySelector('table.sdn')) {
+    const TRUTH = [['N','D','N'], ['S','N','N'], ['D','N','D'], ['D','N','N']];
+    const cells = [...document.querySelectorAll('table.sdn td.cell')], rows = [...document.querySelectorAll('table.sdn tr')].slice(1);
+    const setC = (c, v) => { c.textContent = v || '·'; c.className = 'cell' + (v ? ' ' + v : ''); c.dataset.v = v; };
+    const stat = () => rows.forEach(r => {
+      const vs = [...r.querySelectorAll('.cell')].map(c => c.dataset.v || ''), st = r.querySelector('.st');
+      if (vs.includes('D')) { st.textContent = 'killed'; st.style.color = 'var(--red)'; }
+      else if (vs.every(v => v)) { st.textContent = 'survives'; st.style.color = 'var(--green)'; }
+      else { st.textContent = '–'; st.style.color = 'var(--muted)'; }
+    });
+    cells.forEach(c => { setC(c, ''); c.addEventListener('click', () => { const o = ['', 'S', 'D', 'N']; setC(c, o[(o.indexOf(c.dataset.v || '') + 1) % 4]); stat(); }); });
+    $('sdnShow').addEventListener('click', () => { cells.forEach(c => setC(c, TRUTH[+c.dataset.r][+c.dataset.c])); stat(); });
+    $('sdnClear').addEventListener('click', () => { cells.forEach(c => setC(c, '')); stat(); }); stat();
+  }
+
+  /* ---- time planner ---- */
+  if ($('t1')) {
+    const cols = ['var(--blue)', 'var(--green)', 'var(--orange)', 'var(--navy)'];
+    const run = () => {
+      const v = [1, 2, 3, 4].map(i => +$('t' + i).value); const tot = v.reduce((a, b) => a + b, 0);
+      v.forEach((x, i) => $('t' + (i + 1) + 'v').textContent = x.toFixed(1) + ' min');
+      $('tbar').innerHTML = v.map((x, i) => `<div style="width:${x / 20 * 100}%;background:${cols[i]}"></div>`).join('');
+      $('tTot').textContent = tot.toFixed(1) + ' / 20 min';
+      const m = $('tMsg');
+      if (Math.abs(tot - 20) < 0.01) { m.style.color = 'var(--green)'; m.textContent = 'Exactly 20 minutes'; }
+      else if (tot > 20) { m.style.color = 'var(--red)'; m.textContent = 'Over by ' + (tot - 20).toFixed(1) + ' min'; }
+      else { m.style.color = 'var(--orange)'; m.textContent = (20 - tot).toFixed(1) + ' min unused'; }
+    };
+    [1, 2, 3, 4].forEach(i => $('t' + i).addEventListener('input', run)); run();
+  }
+
+  /* ---- rubric calculator ---- */
+  if ($('rs0')) {
+    const run = () => {
+      let tot = 0, pres = 0;
+      for (let i = 0; i < 7; i++) { const s = $('rs' + i), p = +s.dataset.w * +s.value / 5; $('rv' + i).textContent = 'L' + s.value + ' = ' + p.toFixed(1); tot += p; if (i < 3) pres += p; }
+      $('rubTot').textContent = tot.toFixed(1) + ' / 100';
+      $('rubSplit').textContent = 'Presentation day ' + pres.toFixed(1) + ' / 40 · File ' + (tot - pres).toFixed(1) + ' / 60';
+    };
+    for (let i = 0; i < 7; i++) $('rs' + i).addEventListener('input', run); run();
+  }
+})();
+
+</script>
+</body>
+</html>
